@@ -39,7 +39,7 @@ class MemberPlayStatus {
 }
 
 class FireStoreMemberPlayStatus {
-  static const String collection = "member_play_status";
+  static const String collection = "memberPlayStatus";
   static const String classId = "classId";
   static const String name = "name";
   static const String speed = "speed";

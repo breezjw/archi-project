@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:trainer/controller/auth_controller.dart';
+import 'package:trainer/controller/class_play_status_controller.dart';
 import 'package:trainer/view/class/class_list_view.dart';
+import 'package:trainer/view/common/common_widgets.dart';
 
 import '../class_play/class_play_view.dart';
 
@@ -18,9 +20,10 @@ class ClassDetailView extends StatefulWidget {
 class _ClassDetailViewState extends State<ClassDetailView>
     with SingleTickerProviderStateMixin{
 
-  final Logger _logger = Logger();
+  final Logger logger = Logger();
 
   final AuthController _authController = Get.find<AuthController>();
+  ClassPlayStatusController classPlayStatusController = Get.find<ClassPlayStatusController>();
 
   static const int _numTabs = 3;
   TabController? _tabController;
@@ -50,33 +53,20 @@ class _ClassDetailViewState extends State<ClassDetailView>
           ],
         ),
       ),
-      // bottomNavigationBar: Material(
-      //     color: Colors.white,
-      //     elevation: 10,
-      //     child: TabBar(
-      //       controller: _tabController,
-      //       tabs: [
-      //         _bottomTab(0, Icons.home, Icons.home_outlined),
-      //         _bottomTab(1, Icons.library_books, Icons.library_books_outlined),
-      //         _bottomTab(2, Icons.person, Icons.person_outlined),
-      //       ],
-      //       onTap: (index) => setState((){}),
-      //     )
-      // ),
-      body: Text("sfsdfsd"),
-      bottomSheet: Container(
-        width: MediaQuery.of(context).size.width,
-        child: ElevatedButton (
-          child: Text('Start Workout'),
-          onPressed: () {
-            Get.toNamed(ClassPlayView.routeName, arguments: "test");
-          },
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: '',
-        child: const Icon(Icons.add),
+      body: Container(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          child: Column(
+            children: [
+              Expanded(child: Text("sfsdfsd")),
+              buildButton(
+                buttonText: "START WORKOUT",
+                onPressed: () {
+                  classPlayStatusController.addClassPlayStatus("classId")
+                  .then((value) => Get.toNamed(ClassPlayView.routeName, arguments: value));
+                }
+              )
+            ],
+          )
       ),
     );
   }

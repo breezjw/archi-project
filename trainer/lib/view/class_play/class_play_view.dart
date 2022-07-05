@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:trainer/controller/auth_controller.dart';
+import 'package:trainer/controller/class_play_status_controller.dart';
 import 'package:trainer/view/class/class_list_view.dart';
+import 'package:trainer/view/class_detail/class_detail_view.dart';
 import 'package:trainer/view/class_play/member_play_status_list_view.dart';
+import 'package:trainer/view/common/common_widgets.dart';
 
 class ClassPlayView extends StatefulWidget {
   static const routeName = '/class_play';
@@ -20,13 +23,14 @@ class _ClassPlayViewState extends State<ClassPlayView>
   final Logger _logger = Logger();
 
   final AuthController _authController = Get.find<AuthController>();
+  ClassPlayStatusController classPlayStatusController = Get.find<ClassPlayStatusController>();
 
-  static const int _numTabs = 3;
-  TabController? _tabController;
+  final String docId = Get.arguments;
 
   @override
   void initState() {
-    _tabController = TabController(length: _numTabs, vsync: this);
+    classPlayStatusController.getClassPlayStatus(docId);
+
     super.initState();
   }
 
@@ -52,44 +56,27 @@ class _ClassPlayViewState extends State<ClassPlayView>
           ],
         ),
       ),
-      // bottomNavigationBar: Material(
-      //     color: Colors.white,
-      //     elevation: 10,
-      //     child: TabBar(
-      //       controller: _tabController,
-      //       tabs: [
-      //         _bottomTab(0, Icons.home, Icons.home_outlined),
-      //         _bottomTab(1, Icons.library_books, Icons.library_books_outlined),
-      //         _bottomTab(2, Icons.person, Icons.person_outlined),
-      //       ],
-      //       onTap: (index) => setState((){}),
-      //     )
-      // ),
-      body: MemberPlayStatusListView(),
-      bottomSheet: Container(
-        width: MediaQuery.of(context).size.width,
-        child: ElevatedButton (
-          child: Text('Stop Workout'),
-          style: ElevatedButton.styleFrom(
-              primary: Colors.red, // background
-              onPrimary: Colors.white, // foreground
-          ),
-          onPressed: () {
-          },
+      body: Obx(() => Container(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          child: classPlayStatusController.classPlayStatus == null
+            ? const Center(child: CircularProgressIndicator())
+            : Column(
+              children: [
+                Expanded(child: MemberPlayStatusListView()),
+                Text(classPlayStatusController.classPlayStatus!.trainerClassId),
+                buildButton(
+                  buttonText: "STOP WORKOUT",
+                  onPressed: () {
+                    // Get.toNamed(ClassPlayView.routeName, arguments: "test");
+                    classPlayStatusController.stopClassPlayStatus(docId)
+                    .then((value) => Get.toNamed(ClassDetailView.routeName, arguments: "test"));
+                  },
+                  backgroundColor: Colors.red
+                )
+              ],
+            )
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: '',
-        child: const Icon(Icons.add),
-      ),
+      )
     );
-  }
-
-  Tab _bottomTab(int index, IconData selected, IconData unselected, {color}) {
-    bool isSelected = _tabController?.index == index;
-    return Tab(
-        icon: Icon(
-          isSelected ? selected : unselected, color: color ?? Colors.black,));
   }
 }

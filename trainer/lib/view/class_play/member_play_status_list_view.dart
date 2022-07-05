@@ -23,20 +23,16 @@ class MemberPlayStatusListView extends StatelessWidget {
     //   )
     // );
 
-    return Obx(() => Column(children: [
-        Expanded(
-          child: memberPlayStatusController.listMemberPlayStatus.isEmpty
-            ? const Center(child: CircularProgressIndicator())
-            : ListView.builder(
-              itemCount: memberPlayStatusController.listMemberPlayStatus.length,
-              itemBuilder: (context, index) {
-                return MemberPlayStatusListItem(
-                  memberPlayStatus: memberPlayStatusController.listMemberPlayStatus[index]
-                );
-              }
-          )
-        )
-      ])
+    return Obx(() => memberPlayStatusController.listMemberPlayStatus.isEmpty
+      ? const Center(child: CircularProgressIndicator())
+      : ListView.builder(
+        itemCount: memberPlayStatusController.listMemberPlayStatus.length,
+        itemBuilder: (context, index) {
+          return MemberPlayStatusListItem(
+            memberPlayStatus: memberPlayStatusController.listMemberPlayStatus[index]
+          );
+        }
+    )
     );
   }
 }

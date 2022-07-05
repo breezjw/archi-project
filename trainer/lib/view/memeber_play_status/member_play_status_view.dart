@@ -85,8 +85,8 @@ class _MemberPlayStatusViewState extends State<MemberPlayStatusView>
 
                     Random random = Random();
                     memberPlayStatus!.speed = random.nextInt(10);
-                    memberPlayStatus!.count = random.nextInt(10);
-                    memberPlayStatus!.strength = random.nextInt(10);
+                    memberPlayStatus.count = random.nextInt(10);
+                    memberPlayStatus.strength = random.nextInt(10);
 
                     memberPlayStatusController.updateMemberPlayStatus(memberPlayStatus);
                   },

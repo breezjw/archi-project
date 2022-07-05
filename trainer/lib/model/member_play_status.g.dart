@@ -8,6 +8,7 @@ part of 'member_play_status.dart';
 
 MemberPlayStatus _$MemberPlayStatusFromJson(Map<String, dynamic> json) =>
     MemberPlayStatus(
+      docId: json['docId'],
       classId: json['classId'] as String,
       name: json['name'] as String,
       speed: json['speed'] as int,
@@ -17,6 +18,7 @@ MemberPlayStatus _$MemberPlayStatusFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$MemberPlayStatusToJson(MemberPlayStatus instance) =>
     <String, dynamic>{
+      'docId': instance.docId,
       'classId': instance.classId,
       'name': instance.name,
       'speed': instance.speed,

@@ -22,7 +22,7 @@ class MemberPlayStatusListItem extends StatelessWidget {
     _logger.d(memberPlayStatus.docId);
 
     return Container(
-      padding: const EdgeInsets.only(top: 5, left: 10, right: 10),
+      padding: const EdgeInsets.only(top: 5),
       child: InkWell(
         onTap: () {
           //TODO: Group Detail

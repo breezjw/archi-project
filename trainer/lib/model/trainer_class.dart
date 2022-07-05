@@ -15,14 +15,14 @@ class TrainerClass {
   factory TrainerClass.fromSnapshot(DocumentSnapshot snap) {
     return TrainerClass(
         docId: snap.id,
-        trainerId: snap.get(FireStoreClass.name),
-        name: snap.get(FireStoreClass.name),
+        trainerId: snap.get(FireStoreTrainerClass.name),
+        name: snap.get(FireStoreTrainerClass.name),
     );
   }
 }
 
-class FireStoreClass {
-  static const String collection = "team_group";
+class FireStoreTrainerClass {
+  static const String collection = "trainerClass";
   static const String trainerId = "trainerId";
   static const String name = "name";
 }

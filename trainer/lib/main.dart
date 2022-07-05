@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       getPages: AppRoutes.routes,
       initialRoute: '/',
+      // initialRoute: '/login',
       navigatorKey: Get.key,
     );
   }

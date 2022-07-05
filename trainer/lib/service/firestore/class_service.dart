@@ -3,20 +3,20 @@ import 'package:logger/logger.dart';
 import 'package:trainer/model/trainer_class.dart';
 
 class ClassService {
-  final _logger = Logger();
-  CollectionReference classRef = FirebaseFirestore.instance.collection(FireStoreClass.collection);
+  final logger = Logger();
+  CollectionReference classRef = FirebaseFirestore.instance.collection(FireStoreTrainerClass.collection);
 
   Stream<List<TrainerClass>> listClassSnapshot(String trainerId) {
-    return classRef.where(FireStoreClass.trainerId, isEqualTo: trainerId).snapshots()
+    return classRef.where(FireStoreTrainerClass.trainerId, isEqualTo: trainerId).snapshots()
     .map((query) => query.docs.map((doc) {
-      _logger.d(doc.id);
+      logger.d(doc.id);
       return TrainerClass.fromSnapshot(doc);
     }).toList());
   }
 
   Future<List<TrainerClass>> listClass(String trainerId) {
     return classRef
-        .where(FireStoreClass.trainerId, isEqualTo: trainerId)
+        .where(FireStoreTrainerClass.trainerId, isEqualTo: trainerId)
         .get()
         .then((value) => value.docs.map((e) => TrainerClass.fromSnapshot(e)).toList());
   }

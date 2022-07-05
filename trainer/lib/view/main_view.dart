@@ -70,11 +70,11 @@ class _MainViewState extends State<MainView>
           const Placeholder(),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: '',
-        child: const Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {},
+      //   tooltip: '',
+      //   child: const Icon(Icons.add),
+      // ),
     );
   }
 
