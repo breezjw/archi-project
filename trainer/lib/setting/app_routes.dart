@@ -6,6 +6,7 @@ import 'package:trainer/controller/member_controller.dart';
 import 'package:trainer/controller/member_play_status_controller.dart';
 import 'package:trainer/model/class_play_status.dart';
 import 'package:trainer/service/auth_service.dart';
+import 'package:trainer/service/backend/member_service.dart';
 import 'package:trainer/service/firestore/class_play_status_service.dart';
 import 'package:trainer/service/firestore/class_service.dart';
 import 'package:trainer/service/firestore/member_play_status_service.dart';
@@ -25,7 +26,7 @@ class AppRoutes {
       binding: BindingsBuilder(() {
         Get.put(AuthController(authService: injector.get<AuthService>()));
         Get.put(ClassController(testGroupService: injector.get<ClassService>()));
-        Get.put(MemberController());
+        Get.put(MemberController(memberService: injector.get<MemberService>()));
       }),
     ),
     GetPage(
