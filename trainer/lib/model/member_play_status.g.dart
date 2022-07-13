@@ -6,8 +6,8 @@ part of 'member_play_status.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-MemberPlayStatus _$MemberPlayStatusFromJson(Map<String, dynamic> json) =>
-    MemberPlayStatus(
+Member _$MemberPlayStatusFromJson(Map<String, dynamic> json) =>
+    Member(
       docId: json['docId'],
       classId: json['classId'] as String,
       name: json['name'] as String,
@@ -16,7 +16,7 @@ MemberPlayStatus _$MemberPlayStatusFromJson(Map<String, dynamic> json) =>
       strength: json['strength'] as int,
     );
 
-Map<String, dynamic> _$MemberPlayStatusToJson(MemberPlayStatus instance) =>
+Map<String, dynamic> _$MemberPlayStatusToJson(Member instance) =>
     <String, dynamic>{
       'docId': instance.docId,
       'classId': instance.classId,

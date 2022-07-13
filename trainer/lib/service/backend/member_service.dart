@@ -9,17 +9,34 @@ class MemberService {
   final Logger logger = Logger();
 
   Future<List<Member>> getMemberList() async {
-    final url = Uri.parse(backendUrl + "todos/1");
+    // final url = Uri.parse(backendUrl + "todos/1");
+    //
+    // var response = await http.get(url);
+    // if (response.statusCode == 200) {
+    //   var jsonResponse = convert.jsonDecode(response.body) as Map<String, dynamic>;
+    //
+    //   logger.d(jsonResponse);
+    // } else {
+    //   logger.e('Request failed with status: ${response.statusCode}.');
+    // }
 
-    var response = await http.get(url);
-    if (response.statusCode == 200) {
-      var jsonResponse = convert.jsonDecode(response.body) as Map<String, dynamic>;
+    List<Member> retMembers= [];
 
-      logger.d(jsonResponse);
-    } else {
-      logger.e('Request failed with status: ${response.statusCode}.');
-    }
+    retMembers.add(Member(docId: "", name: "AAA"));
+    retMembers.add(Member(docId: "", name: "BBB"));
+    retMembers.add(Member(docId: "", name: "CCC"));
 
-    return [];
+    return retMembers;
+  }
+
+  Future<List<Member>> getMemberListMock() async {
+
+    List<Member> retMembers= [];
+
+    retMembers.add(Member(docId: "", name: "AAA"));
+    retMembers.add(Member(docId: "", name: "BBB"));
+    retMembers.add(Member(docId: "", name: "CCC"));
+
+    return retMembers;
   }
 }

@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:trainer/controller/class_controller.dart';
 import 'package:trainer/controller/member_controller.dart';
-import 'package:trainer/view/class/class_list_item.dart';
+import 'package:trainer/view/class_list/class_list_item.dart';
+import 'package:trainer/view/class_new/class_new_view.dart';
 import 'package:trainer/view/common/common_widgets.dart';
 
 class ClassListView extends StatelessWidget {
@@ -34,7 +35,9 @@ class ClassListView extends StatelessWidget {
           ),
           buildButton(
             buttonText: "ADD NEW CLASS",
-            onPressed: () {}
+            onPressed: () {
+              Get.toNamed(ClassNewView.routeName, arguments: "");
+            }
           )
         ]),
     )

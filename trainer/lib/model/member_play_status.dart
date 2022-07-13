@@ -5,7 +5,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'member_play_status.g.dart';
 
 @JsonSerializable()
-class MemberPlayStatus {
+class Member {
   //TODO: docId
   String docId = "";
   String classId;
@@ -14,7 +14,7 @@ class MemberPlayStatus {
   int count;
   int strength;
 
-  MemberPlayStatus({
+  Member({
     docId,
     required this.classId,
     required this.name,
@@ -23,11 +23,11 @@ class MemberPlayStatus {
     required this.strength,
   });
 
-  factory MemberPlayStatus.fromJson(Map<String, dynamic> json) => _$MemberPlayStatusFromJson(json);
+  factory Member.fromJson(Map<String, dynamic> json) => _$MemberPlayStatusFromJson(json);
   Map<String, dynamic> toJson() => _$MemberPlayStatusToJson(this);
 
-  factory MemberPlayStatus.fromSnapshot(DocumentSnapshot snap) {
-      return MemberPlayStatus(
+  factory Member.fromSnapshot(DocumentSnapshot snap) {
+      return Member(
       docId: snap.id,
       classId: snap.get(FireStoreMemberPlayStatus.classId),
       name: snap.get(FireStoreMemberPlayStatus.name),

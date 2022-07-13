@@ -29,3 +29,16 @@ Widget buildButton({
     ),
   );
 }
+
+Widget buildTextField({String label = "", TextEditingController? controller}) {
+  return Container(
+    padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+    child: TextField(
+      decoration: InputDecoration(
+          border: const OutlineInputBorder(),
+          labelText: label
+      ),
+      controller: controller,
+    ),
+  );
+}

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:trainer/controller/auth_controller.dart';
-import 'package:trainer/view/class/class_list_view.dart';
+import 'package:trainer/view/class_list/class_list_view.dart';
 
 class MainView extends StatefulWidget {
   static const routeName = '/';

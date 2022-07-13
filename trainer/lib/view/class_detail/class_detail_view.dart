@@ -3,13 +3,13 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:trainer/controller/auth_controller.dart';
 import 'package:trainer/controller/class_play_status_controller.dart';
-import 'package:trainer/view/class/class_list_view.dart';
+import 'package:trainer/view/class_list//class_list_view.dart';
 import 'package:trainer/view/common/common_widgets.dart';
 
 import '../class_play/class_play_view.dart';
 
 class ClassDetailView extends StatefulWidget {
-  static const routeName = '/class';
+  static const routeName = '/class_list';
 
   const ClassDetailView({Key? key}) : super(key: key);
 
@@ -25,12 +25,8 @@ class _ClassDetailViewState extends State<ClassDetailView>
   final AuthController _authController = Get.find<AuthController>();
   ClassPlayStatusController classPlayStatusController = Get.find<ClassPlayStatusController>();
 
-  static const int _numTabs = 3;
-  TabController? _tabController;
-
   @override
   void initState() {
-    _tabController = TabController(length: _numTabs, vsync: this);
     super.initState();
   }
 
@@ -71,10 +67,4 @@ class _ClassDetailViewState extends State<ClassDetailView>
     );
   }
 
-  Tab _bottomTab(int index, IconData selected, IconData unselected, {color}) {
-    bool isSelected = _tabController?.index == index;
-    return Tab(
-        icon: Icon(
-          isSelected ? selected : unselected, color: color ?? Colors.black,));
-  }
 }

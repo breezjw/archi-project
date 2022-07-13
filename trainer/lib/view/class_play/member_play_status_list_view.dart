@@ -4,7 +4,7 @@ import 'package:logger/logger.dart';
 import 'package:trainer/controller/class_controller.dart';
 import 'package:trainer/controller/member_play_status_controller.dart';
 import 'package:trainer/service/firestore/member_play_status_service.dart';
-import 'package:trainer/view/class/class_list_item.dart';
+import 'package:trainer/view/class_list/class_list_item.dart';
 import 'package:trainer/view/class_play/member_paly_status_list_item.dart';
 
 class MemberPlayStatusListView extends StatelessWidget {

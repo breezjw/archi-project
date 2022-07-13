@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:trainer/controller/auth_controller.dart';
 import 'package:trainer/controller/class_play_status_controller.dart';
-import 'package:trainer/view/class/class_list_view.dart';
+import 'package:trainer/view/class_list/class_list_view.dart';
 import 'package:trainer/view/class_detail/class_detail_view.dart';
 import 'package:trainer/view/class_play/member_play_status_list_view.dart';
 import 'package:trainer/view/common/common_widgets.dart';

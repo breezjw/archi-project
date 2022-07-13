@@ -18,7 +18,7 @@ class Member {
   // }
 }
 
-// class FireStoreClass {
+// class_list FireStoreClass {
 //   static const String collection = "team_group";
 //   static const String name = "name";
 // }

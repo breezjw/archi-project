@@ -14,7 +14,7 @@ class MemberController extends GetxController {
   final MemberService memberService;
   MemberController({required this.memberService});
 
-  final RxList<Member> listTrainerClass = RxList<Member>();
+  final RxList<Member> listMember = RxList<Member>();
 
   @override
   void onInit() {
@@ -22,7 +22,9 @@ class MemberController extends GetxController {
     super.onInit();
   }
 
-  Future<List<Member>> getMemberList() async {
-    return memberService.getMemberList();
+   void getMemberList() async {
+    memberService.getMemberListMock().then((value) {
+      listMember.value = value;
+    });
   }
 }

@@ -1,34 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:trainer/model/member_play_status.dart';
-import 'package:trainer/model/trainer_class.dart';
-import 'package:trainer/view/class_detail/class_detail_view.dart';
-import 'package:trainer/view/memeber_play_status/member_play_status_view.dart';
+import 'package:trainer/model/member.dart';
 
-class MemberPlayStatusListItem extends StatelessWidget {
-  final Member memberPlayStatus;
+class MemberListItem extends StatelessWidget {
+  final Member member;
 
-  const MemberPlayStatusListItem({
+  const MemberListItem({
     Key? key,
-    required this.memberPlayStatus
+    required this.member
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final Logger _logger = Logger();
 
-    _logger.d(memberPlayStatus.name);
-    _logger.d(memberPlayStatus.docId);
+    _logger.d(member.name);
+    _logger.d(member.docId);
 
     return Container(
       padding: const EdgeInsets.only(top: 5),
       child: InkWell(
         onTap: () {
-          //TODO: Group Detail
-          _logger.d("HERE");
-          Get.toNamed(MemberPlayStatusView.routeName, arguments: memberPlayStatus.docId);
-          // Get.to(() => NextPage(), arguments: value);
         },
         child: Container(
           decoration: BoxDecoration(
@@ -43,7 +35,7 @@ class MemberPlayStatusListItem extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(children: [
                   Text(
-                    "Name: ${memberPlayStatus.name}",
+                    "Name: ${member.name}",
                     style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20
