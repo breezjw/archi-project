@@ -27,8 +27,10 @@ class _ClassNewViewState extends State<ClassNewView>
 
   final AuthController _authController = Get.find<AuthController>();
   MemberController memberController = Get.find<MemberController>();
+  ClassPlayStatusController classPlayStatusController = Get.find<ClassPlayStatusController>();
 
   late List<bool> _isChecked;
+  TextEditingController classNameTextController = TextEditingController();
 
   @override
   void initState() {
@@ -62,7 +64,7 @@ class _ClassNewViewState extends State<ClassNewView>
             ? const Center(child: CircularProgressIndicator())
             :Column(
               children: [
-                buildTextField(label: "Class Name"),
+                buildTextField(label: "Class Name", controller: classNameTextController),
                 buildTextField(label: "Workout Type"),
                 Expanded(
                   child: ListView.builder(
@@ -84,6 +86,8 @@ class _ClassNewViewState extends State<ClassNewView>
                 buildButton(
                     buttonText: "ADD CLASS",
                     onPressed: () {
+                      classPlayStatusController.addClassPlayStatus(classNameTextController.text)
+                      .then((value) => Get.toNamed("/"));
                     }
                 )
               ],

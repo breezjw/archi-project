@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:trainer/controller/class_controller.dart';
+import 'package:trainer/controller/class_play_status_controller.dart';
 import 'package:trainer/controller/member_controller.dart';
 import 'package:trainer/view/class_list/class_list_item.dart';
 import 'package:trainer/view/class_new/class_new_view.dart';
@@ -26,8 +27,11 @@ class ClassListView extends StatelessWidget {
               : ListView.builder(
                   itemCount: classController.listTrainerClass.length,
                   itemBuilder: (context, index) {
+
+                    final trainerClass = classController.listTrainerClass[index];
+
                     return ClassListItem(
-                      trainerClass: classController.listTrainerClass[index]
+                      trainerClass: trainerClass
                     );
                   }
               ),

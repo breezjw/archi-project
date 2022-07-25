@@ -7,20 +7,6 @@ class ClassPlayStatusService {
   final logger = Logger();
   CollectionReference classPlayStatusRef = FirebaseFirestore.instance.collection(FireStoreClassPlayStatus.collection);
 
-  Future<ClassPlayStatus> getClassPlayStatus(String id) {
-    // TODO: change id
-    return classPlayStatusRef.doc(id).get().then((snapshot) {
-      logger.d(snapshot);
-
-      if (snapshot.exists) {
-        return ClassPlayStatus.fromSnapshot(snapshot);
-      }
-
-      //TODO: define exception
-      throw ("Not EXIST!!");
-    });
-  }
-
   ClassPlayStatus _dataFromSnapshot(DocumentSnapshot snapshot,) {
     logger.d(snapshot.data());
 
@@ -30,11 +16,30 @@ class ClassPlayStatusService {
     return classPlayStatus;
   }
 
-  Stream<ClassPlayStatus> getClassPlayStatusStream(String docId) {
+  Future<ClassPlayStatus> getClassPlayStatusByClassId(String classId) {
+
     return classPlayStatusRef
-        .doc(docId)
-        .snapshots()
-        .map(_dataFromSnapshot);
+        .where(FireStoreClassPlayStatus.trainerClassId, isEqualTo: classId)
+        .get()
+        .then((value) => value.docs.map((doc) {
+          var classPlayStatus =  ClassPlayStatus.fromSnapshot(doc);
+          classPlayStatus.docId = doc.id;
+
+          return classPlayStatus;
+        }).toList()[0]);
+  }
+
+  Stream<ClassPlayStatus> getClassPlayStatusStreamByClassId(String classId) {
+    return classPlayStatusRef
+      .where(FireStoreClassPlayStatus.trainerClassId, isEqualTo: classId)
+      .snapshots()
+      .map((query) => query.docs.map((doc) {
+        logger.d(doc.id);
+        var classPlayStatus =  ClassPlayStatus.fromSnapshot(doc);
+        classPlayStatus.docId = doc.id;
+
+      return classPlayStatus;
+    }).toList()[0]);
   }
 
   Future<String?> addClassPlayStatus(String classId) async {
@@ -42,9 +47,10 @@ class ClassPlayStatusService {
 
     await classPlayStatusRef.add({
       FireStoreClassPlayStatus.trainerClassId: classId,
-      FireStoreClassPlayStatus.status: "play",
+      FireStoreClassPlayStatus.status: "stop",
       FireStoreClassPlayStatus.startDate: DateTime.now(),
       FireStoreClassPlayStatus.endDate: DateTime.now(),
+      FireStoreClassPlayStatus.playCount: 0
     })
     .then((value) {
       logger.d("ClassPlayStatus added: ${value.id}");
@@ -61,13 +67,19 @@ class ClassPlayStatusService {
     return null;
   }
 
-  Future<void> updateClassPlayStatus(String docId, {String? status, DateTime? endDate}) async {
+  Future<void> updateClassPlayStatus(String docId,
+      {String? status, DateTime? startDate, DateTime? endDate, int? playCount}) async {
+
+    Map<String, dynamic> updateData = {};
+
+    if (status != null) updateData[FireStoreClassPlayStatus.status] = status;
+    if (startDate != null) updateData[FireStoreClassPlayStatus.startDate] = startDate;
+    if (endDate != null) updateData[FireStoreClassPlayStatus.endDate] = endDate;
+    if (playCount != null) updateData[FireStoreClassPlayStatus.playCount] = playCount;
+
     classPlayStatusRef
       .doc(docId)
-      .update({
-        FireStoreClassPlayStatus.status: status,
-        FireStoreClassPlayStatus.endDate: endDate
-      })
+      .update(updateData)
       .then((_) => logger.d('Success'))
       .catchError((error) => logger.e('Failed: $error'));
   }

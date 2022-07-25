@@ -25,6 +25,8 @@ class _ClassDetailViewState extends State<ClassDetailView>
   final AuthController _authController = Get.find<AuthController>();
   ClassPlayStatusController classPlayStatusController = Get.find<ClassPlayStatusController>();
 
+  final String classId = Get.arguments;
+
   @override
   void initState() {
     super.initState();
@@ -57,8 +59,8 @@ class _ClassDetailViewState extends State<ClassDetailView>
               buildButton(
                 buttonText: "START WORKOUT",
                 onPressed: () {
-                  classPlayStatusController.addClassPlayStatus("classId")
-                  .then((value) => Get.toNamed(ClassPlayView.routeName, arguments: value));
+                  classPlayStatusController.startClassPlayStatus(classId)
+                  .then((value) => Get.toNamed(ClassPlayView.routeName, arguments: classId));
                 }
               )
             ],

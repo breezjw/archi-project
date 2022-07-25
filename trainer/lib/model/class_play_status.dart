@@ -15,13 +15,15 @@ class ClassPlayStatus {
   DateTime startDate;
   @JsonKey(fromJson: dateTimeFromTimestamp)
   DateTime endDate;
+  int playCount;
 
   ClassPlayStatus({
     docId,
     required this.trainerClassId,
     required this.status,
     required this.startDate,
-    required this.endDate
+    required this.endDate,
+    this.playCount = 0
   });
 
   factory ClassPlayStatus.fromJson(Map<String, dynamic> json) =>
@@ -42,6 +44,7 @@ class ClassPlayStatus {
       status: snap.get(FireStoreClassPlayStatus.status),
       startDate: startDate,
       endDate: endDate,
+      playCount: snap.get(FireStoreClassPlayStatus.playCount)
     );
   }
 }
@@ -56,4 +59,5 @@ class FireStoreClassPlayStatus {
   static const String status = "status";
   static const String startDate = "startDate";
   static const String endDate = "endDate";
+  static const String playCount = "playCount";
 }

@@ -25,11 +25,11 @@ class _ClassPlayViewState extends State<ClassPlayView>
   final AuthController _authController = Get.find<AuthController>();
   ClassPlayStatusController classPlayStatusController = Get.find<ClassPlayStatusController>();
 
-  final String docId = Get.arguments;
+  final String classId = Get.arguments;
 
   @override
   void initState() {
-    classPlayStatusController.getClassPlayStatus(docId);
+    classPlayStatusController.bindClassPlayStatus(classId);
 
     super.initState();
   }
@@ -68,8 +68,8 @@ class _ClassPlayViewState extends State<ClassPlayView>
                   buttonText: "STOP WORKOUT",
                   onPressed: () {
                     // Get.toNamed(ClassPlayView.routeName, arguments: "test");
-                    classPlayStatusController.stopClassPlayStatus(docId)
-                    .then((value) => Get.toNamed(ClassDetailView.routeName, arguments: "test"));
+                    classPlayStatusController.stopClassPlayStatus(classId)
+                    .then((value) => Get.toNamed(ClassDetailView.routeName, arguments: classId));
                   },
                   backgroundColor: Colors.red
                 )

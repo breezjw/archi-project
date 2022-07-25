@@ -27,6 +27,7 @@ class AppRoutes {
       binding: BindingsBuilder(() {
         Get.put(AuthController(authService: injector.get<AuthService>()));
         Get.put(ClassController(testGroupService: injector.get<ClassService>()));
+        Get.put(ClassPlayStatusController(classPlayStatusService: injector.get<ClassPlayStatusService>()));
         Get.put(MemberController(memberService: injector.get<MemberService>()));
       }),
     ),
@@ -34,7 +35,7 @@ class AppRoutes {
       name: ClassNewView.routeName,
       page: () => const ClassNewView(),
       binding: BindingsBuilder(() {
-        // Get.put(ClassPlayStatusController(classPlayStatusService: injector.get<ClassPlayStatusService>()));
+        Get.put(ClassPlayStatusController(classPlayStatusService: injector.get<ClassPlayStatusService>()));
         Get.put(AuthController(authService: injector.get<AuthService>()));
         Get.put(ClassController(testGroupService: injector.get<ClassService>()));
         Get.put(MemberController(memberService: injector.get<MemberService>()));
