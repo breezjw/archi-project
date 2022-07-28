@@ -2,14 +2,19 @@
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:trainer/model/class_play_status.dart';
+import 'package:trainer/service/auth_service.dart';
 import 'package:trainer/service/firestore/class_play_status_service.dart';
 
 class ClassPlayStatusController extends GetxController {
   final Logger logger = Logger();
 
   final ClassPlayStatusService classPlayStatusService;
+  final AuthService authService;
 
-  ClassPlayStatusController({required this.classPlayStatusService});
+  ClassPlayStatusController({
+    required this.classPlayStatusService,
+    required this.authService
+  });
 
   // final RxList<ClassPlayStatus> listClassPlayStatus = RxList<ClassPlayStatus>();
   final Rx<ClassPlayStatus?> _classPlayStatus = Rx<ClassPlayStatus?>(null);
@@ -19,6 +24,7 @@ class ClassPlayStatusController extends GetxController {
 
   @override
   void onInit() {
+    logger.d(authService.user);
     super.onInit();
   }
 

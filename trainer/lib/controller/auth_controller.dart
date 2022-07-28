@@ -11,6 +11,7 @@ class AuthController extends GetxController {
   final AuthService authService;
 
   AuthController({required this.authService});
+  static AuthController to = Get.find();
 
   Logger logger = Logger();
 
@@ -18,16 +19,15 @@ class AuthController extends GetxController {
   //RxBool isLogged = false.obs;
   Rxn<User> user = Rxn<User>();
 
-  late AuthService _authService;
+  // late AuthService _authService;
   late TextEditingController emailController;
   late TextEditingController passwordController;
 
   @override
   void onInit() {
-    _authService = AuthService();
+    // _authService = AuthService();
 
-    user.value = _authService.getCurrentUser();
-    user.bindStream(_authService.onAuthChanged());
+    // user.value = authService.getCurrentUser();
     logger.d("$user");
 
     emailController = TextEditingController();
@@ -39,7 +39,9 @@ class AuthController extends GetxController {
   @override
   void onReady() async {
     ever(user, handleAuthChanged);
-    await handleAuthChanged(user);
+    user.bindStream(authService.onAuthChanged());
+
+    // await handleAuthChanged(user);
 
     super.onReady();
   }
@@ -47,7 +49,7 @@ class AuthController extends GetxController {
   handleAuthChanged(user) {
     logger.d("handleAuthChanged");
     logger.d(user);
-    if (user.email == null) {
+    if (user == null) {
       logger.d("Go /login");
       Get.offAllNamed("/login");
     } else {
@@ -76,11 +78,11 @@ class AuthController extends GetxController {
 
     try {
       if (type == SignInType.GOOGLE) {
-        await _authService.signInWithGoogle();
+        await authService.signInWithGoogle();
         Get.offAllNamed("/");
       }
     } on Exception catch (_, e) {
-      Get.back();
+      // Get.back();
       Get.defaultDialog(title: "Error", middleText: e.toString(), actions: [
         FlatButton(
           onPressed: () {
@@ -97,6 +99,6 @@ class AuthController extends GetxController {
 
   handleSignOut() async{
     logger.d("SIGN OUT");
-    await _authService.signOut();
+    await authService.signOut();
   }
 }

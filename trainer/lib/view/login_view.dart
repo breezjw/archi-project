@@ -9,7 +9,7 @@ class LoginView extends StatelessWidget {
 
   LoginView({Key? key}) : super(key: key);
 
-  final AuthController _authController = Get.find<AuthController>();
+  final AuthController _authController = AuthController.to;
 
   @override
   Widget build(BuildContext context) {

@@ -11,6 +11,7 @@ class AuthService {
   User? user;
 
   AuthService() {
+    logger.d("AUTH SERVICE START");
     _firebaseAuth.authStateChanges().listen((user) {
       logger.d("CHANGED!!");
       this.user = user;
@@ -36,8 +37,9 @@ class AuthService {
       idToken: googleAuth?.idToken,
     );
 
-    return await _firebaseAuth.signInWithCredential(credential);
     // User? user = _firebaseAuth.currentUser;
+
+    return await _firebaseAuth.signInWithCredential(credential);
     //
     // logger.d("$user");
     //
@@ -50,7 +52,8 @@ class AuthService {
   }
 
   User? getCurrentUser() {
-    return _firebaseAuth.currentUser;
+    logger.d(_firebaseAuth.currentUser);
+    return user;
   }
 
   Future<String?> getAccessToken() async {

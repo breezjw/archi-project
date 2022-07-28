@@ -17,17 +17,38 @@ import 'package:trainer/view/class_play/member_play_status_list_view.dart';
 import 'package:trainer/view/login_view.dart';
 import 'package:trainer/view/main_view.dart';
 import 'package:trainer/view/memeber_play_status/member_play_status_view.dart';
+import 'package:trainer/view/splash_view.dart';
 import 'dependency_injector.dart';
 
 class AppRoutes {
   static final routes = [
     GetPage(
+        name: SplashScreenView.routeName,
+        page: () => SplashScreenView(),
+        binding: BindingsBuilder(() {
+          Get.put(AuthController(authService: injector.get<AuthService>()));
+        })
+    ),
+    GetPage(
+        name: LoginView.routeName,
+        page: () => LoginView(),
+        binding: BindingsBuilder(() {
+          // Get.put(AuthController(authService: injector.get<AuthService>()));
+          Get.lazyPut(() => AuthController(
+            authService: injector.get<AuthService>(),
+          ), fenix: false);
+        })
+    ),
+    GetPage(
       name: MainView.routeName,
       page: () => const MainView(),
       binding: BindingsBuilder(() {
-        Get.put(AuthController(authService: injector.get<AuthService>()));
+        // Get.put(AuthController(authService: injector.get<AuthService>()));
         Get.put(ClassController(testGroupService: injector.get<ClassService>()));
-        Get.put(ClassPlayStatusController(classPlayStatusService: injector.get<ClassPlayStatusService>()));
+        Get.put(ClassPlayStatusController(
+          classPlayStatusService: injector.get<ClassPlayStatusService>(),
+          authService: injector.get<AuthService>()
+        ));
         Get.put(MemberController(memberService: injector.get<MemberService>()));
       }),
     ),
@@ -35,8 +56,11 @@ class AppRoutes {
       name: ClassNewView.routeName,
       page: () => const ClassNewView(),
       binding: BindingsBuilder(() {
-        Get.put(ClassPlayStatusController(classPlayStatusService: injector.get<ClassPlayStatusService>()));
-        Get.put(AuthController(authService: injector.get<AuthService>()));
+        Get.put(ClassPlayStatusController(
+            classPlayStatusService: injector.get<ClassPlayStatusService>(),
+            authService: injector.get<AuthService>()
+        ));
+        // Get.put(AuthController(authService: injector.get<AuthService>()));
         Get.put(ClassController(testGroupService: injector.get<ClassService>()));
         Get.put(MemberController(memberService: injector.get<MemberService>()));
       }),
@@ -45,7 +69,10 @@ class AppRoutes {
       name: ClassDetailView.routeName,
       page: () => const ClassDetailView(),
       binding: BindingsBuilder(() {
-       Get.put(ClassPlayStatusController(classPlayStatusService: injector.get<ClassPlayStatusService>()));
+        Get.put(ClassPlayStatusController(
+            classPlayStatusService: injector.get<ClassPlayStatusService>(),
+            authService: injector.get<AuthService>()
+        ));
        Get.put(MemberPlayStatusController(memberPlayStatusService: injector.get<MemberPlayStatusService>()));
         // Get.put(AuthController(authService: injector.get<AuthService>()));
         // Get.put(ClassController(testGroupService: injector.get<ClassService>()));
@@ -56,7 +83,10 @@ class AppRoutes {
       page: () => const ClassPlayView(),
       binding: BindingsBuilder(() {
         // Get.put(AuthController(authService: injector.get<AuthService>()));
-        Get.put(ClassPlayStatusController(classPlayStatusService: injector.get<ClassPlayStatusService>()));
+        Get.put(ClassPlayStatusController(
+            classPlayStatusService: injector.get<ClassPlayStatusService>(),
+            authService: injector.get<AuthService>()
+        ));
         Get.put(MemberPlayStatusController(memberPlayStatusService: injector.get<MemberPlayStatusService>()));
       }),
     ),
@@ -64,16 +94,9 @@ class AppRoutes {
       name: MemberPlayStatusView.routeName,
       page: () => MemberPlayStatusView(),
       binding: BindingsBuilder(() {
-        Get.put(AuthController(authService: injector.get<AuthService>()));
+        // Get.put(AuthController(authService: injector.get<AuthService>()));
         Get.put(MemberPlayStatusController(memberPlayStatusService: injector.get<MemberPlayStatusService>()));
       }),
-    ),
-    GetPage(
-      name: LoginView.routeName,
-      page: () => LoginView(),
-      binding: BindingsBuilder(() {
-        Get.put(AuthController(authService: injector.get<AuthService>()));
-      })
     ),
   ];
 }

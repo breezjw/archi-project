@@ -25,7 +25,7 @@ class _ClassNewViewState extends State<ClassNewView>
 
   final Logger logger = Logger();
 
-  final AuthController _authController = Get.find<AuthController>();
+  final AuthController _authController = AuthController.to;
   MemberController memberController = Get.find<MemberController>();
   ClassPlayStatusController classPlayStatusController = Get.find<ClassPlayStatusController>();
 

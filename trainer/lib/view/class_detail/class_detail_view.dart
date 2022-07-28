@@ -23,7 +23,7 @@ class _ClassDetailViewState extends State<ClassDetailView>
 
   final Logger logger = Logger();
 
-  final AuthController _authController = Get.find<AuthController>();
+  final AuthController _authController = AuthController.to;
   ClassPlayStatusController classPlayStatusController = Get.find<ClassPlayStatusController>();
 
   final String classId = Get.arguments;

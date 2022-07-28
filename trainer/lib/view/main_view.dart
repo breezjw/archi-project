@@ -18,7 +18,7 @@ class _MainViewState extends State<MainView>
 
   final Logger _logger = Logger();
 
-  final AuthController _authController = Get.find<AuthController>();
+  final AuthController _authController = AuthController.to;
 
   static const int _numTabs = 3;
   TabController? _tabController;

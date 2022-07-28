@@ -23,7 +23,7 @@ class _ClassPlayViewState extends State<ClassPlayView>
 
   final Logger _logger = Logger();
 
-  final AuthController _authController = Get.find<AuthController>();
+  final AuthController _authController = AuthController.to;
   ClassPlayStatusController classPlayStatusController = Get.find<ClassPlayStatusController>();
   MemberPlayStatusController memberPlayStatusController = Get.find<MemberPlayStatusController>();
 

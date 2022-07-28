@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       getPages: AppRoutes.routes,
-      initialRoute: '/',
+      initialRoute: '/splash',
       // initialRoute: '/login',
       navigatorKey: Get.key,
     );

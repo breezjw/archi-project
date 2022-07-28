@@ -25,7 +25,7 @@ class _MemberPlayStatusViewState extends State<MemberPlayStatusView>
 
   final Logger _logger = Logger();
 
-  final AuthController _authController = Get.find<AuthController>();
+  final AuthController _authController = AuthController.to;
   MemberPlayStatusController memberPlayStatusController = Get.find<MemberPlayStatusController>();
 
   int memberWorkoutSpeed = 5;
@@ -71,8 +71,8 @@ class _MemberPlayStatusViewState extends State<MemberPlayStatusView>
                 buildNormalText(text: "Name: ${memberPlayStatusController.memberPlayStatus!.name}"),
                 Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
                 buildTitleText(text:"Member GEMS Info"),
-                buildNormalText(text: "Strength: ${memberPlayStatusController.memberPlayStatus!.strength}"),
                 buildNormalText(text: "Speed: ${memberPlayStatusController.memberPlayStatus!.speed}"),
+                buildNormalText(text: "Strength: ${memberPlayStatusController.memberPlayStatus!.strength}"),
                 buildNormalText(text: "Count: ${memberPlayStatusController.memberPlayStatus!.count}"),
                 Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
                 buildTitleText(text:"Member GEMS Control"),
@@ -89,14 +89,20 @@ class _MemberPlayStatusViewState extends State<MemberPlayStatusView>
                     label: "Workout Strength",
                     initialValue: memberWorkoutStrength.toString(),
                     callback: (value) {
-                      _logger.d(value);
+                      setState(() {
+                        _logger.d(value);
+                        memberWorkoutStrength = int.parse(value!);
+                      });
                     }),
                 buildDropdownButton(
                     label: "Workout Count",
-                    range: 30,
+                    range: 20,
                     initialValue: memberWorkoutCount.toString(),
                     callback: (value) {
-                      _logger.d(value);
+                      setState(() {
+                        _logger.d(value);
+                        memberWorkoutCount = int.parse(value!);
+                      });
                     }),
                 Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
                 SizedBox(
