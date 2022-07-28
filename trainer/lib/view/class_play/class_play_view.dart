@@ -27,6 +27,9 @@ class _ClassPlayViewState extends State<ClassPlayView>
 
   final String classId = Get.arguments;
 
+  int classWorkoutSpeed = 5;
+  int classWorkoutStrength = 5;
+
   @override
   void initState() {
     classPlayStatusController.bindClassPlayStatus(classId);
@@ -62,6 +65,26 @@ class _ClassPlayViewState extends State<ClassPlayView>
             ? const Center(child: CircularProgressIndicator())
             : Column(
               children: [
+                buildTitleText(text:"Class Info"),
+                buildNormalText(text: "Workout Type: Diet Class"),
+                Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
+                buildTitleText(text:"Class Workout Control"),
+                buildDropdownButton(
+                  label: "Workout Speed",
+                  initialValue: classWorkoutSpeed.toString(),
+                  callback: (value) {
+                    setState(() {
+                      _logger.d(value);
+                      classWorkoutSpeed = int.parse(value!);
+                    });
+                }),
+                buildDropdownButton(
+                   label: "Workout Strength",
+                   callback: (value) {
+                     _logger.d(value);
+                }),
+                Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
+                buildTitleText(text:"Member Workout Status"),
                 Expanded(child: MemberPlayStatusListView()),
                 Text(classPlayStatusController.classPlayStatus!.trainerClassId),
                 buildButton(

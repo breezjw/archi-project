@@ -55,7 +55,9 @@ class _ClassDetailViewState extends State<ClassDetailView>
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: Column(
             children: [
-              Expanded(child: Text("sfsdfsd")),
+              Expanded(
+                child: buildTitleText(text: "Class Info")
+              ),
               buildButton(
                 buttonText: "START WORKOUT",
                 onPressed: () {
