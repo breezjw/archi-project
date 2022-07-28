@@ -6,7 +6,7 @@ import 'package:trainer/controller/class_play_status_controller.dart';
 import 'package:trainer/controller/member_controller.dart';
 import 'package:trainer/service/backend/member_service.dart';
 import 'package:trainer/view/class_list/class_list_view.dart';
-import 'package:trainer/view/class_new/member_list_item.dart';
+import 'package:trainer/view/class_new/member_new_list_item.dart';
 import 'package:trainer/view/common/common_widgets.dart';
 
 import '../class_play/class_play_view.dart';
@@ -64,8 +64,11 @@ class _ClassNewViewState extends State<ClassNewView>
             ? const Center(child: CircularProgressIndicator())
             :Column(
               children: [
+                buildTitleText(text:"Class Info"),
                 buildTextField(label: "Class Name", controller: classNameTextController),
                 buildTextField(label: "Workout Type"),
+                Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
+                buildTitleText(text:"Class Member"),
                 Expanded(
                   child: ListView.builder(
                     itemCount: memberController.listMember.length,

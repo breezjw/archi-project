@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:trainer/controller/auth_controller.dart';
 import 'package:trainer/controller/class_play_status_controller.dart';
+import 'package:trainer/controller/member_play_status_controller.dart';
 import 'package:trainer/view/class_list/class_list_view.dart';
 import 'package:trainer/view/class_detail/class_detail_view.dart';
 import 'package:trainer/view/class_play/member_play_status_list_view.dart';
@@ -24,11 +25,13 @@ class _ClassPlayViewState extends State<ClassPlayView>
 
   final AuthController _authController = Get.find<AuthController>();
   ClassPlayStatusController classPlayStatusController = Get.find<ClassPlayStatusController>();
+  MemberPlayStatusController memberPlayStatusController = Get.find<MemberPlayStatusController>();
 
   final String classId = Get.arguments;
 
   int classWorkoutSpeed = 5;
   int classWorkoutStrength = 5;
+  int classWorkoutCount = 10;
 
   @override
   void initState() {
@@ -68,7 +71,7 @@ class _ClassPlayViewState extends State<ClassPlayView>
                 buildTitleText(text:"Class Info"),
                 buildNormalText(text: "Workout Type: Diet Class"),
                 Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
-                buildTitleText(text:"Class Workout Control"),
+                buildTitleText(text:"Class GEMS Control"),
                 buildDropdownButton(
                   label: "Workout Speed",
                   initialValue: classWorkoutSpeed.toString(),
@@ -79,14 +82,61 @@ class _ClassPlayViewState extends State<ClassPlayView>
                     });
                 }),
                 buildDropdownButton(
-                   label: "Workout Strength",
-                   callback: (value) {
-                     _logger.d(value);
+                  label: "Workout Strength",
+                  initialValue: classWorkoutStrength.toString(),
+                  callback: (value) {
+                    setState(() {
+                      _logger.d(value);
+                      classWorkoutStrength = int.parse(value!);
+                    });
                 }),
-                Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
+                buildDropdownButton(
+                  label: "Workout Count",
+                  range: 20,
+                  initialValue: classWorkoutCount.toString(),
+                  callback: (value) {
+                    setState(() {
+                      _logger.d(value);
+                      classWorkoutCount = int.parse(value!);
+                    });
+                }),
+                SizedBox(
+                  height: 40,
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      memberPlayStatusController.listMemberPlayStatus.forEach((element) {
+                        var memberPlayStatus = element;
+                        memberPlayStatus.speed = classWorkoutSpeed;
+                        memberPlayStatus.count = classWorkoutStrength;
+                        memberPlayStatus.strength = classWorkoutCount;
+
+                        _logger.d(memberPlayStatus.toJson());
+
+                        memberPlayStatusController.updateMemberPlayStatus(memberPlayStatus);
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.white,//change background color of button
+                      onPrimary: Colors.blue,//change text color of button
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      elevation: 15.0,
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.all(3.0),
+                      child: Text(
+                        "SET GEMS",
+                        style: TextStyle(fontSize: 15),
+                      ),
+                    ),
+
+                  ),
+                ),
+                Container(padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),),
                 buildTitleText(text:"Member Workout Status"),
                 Expanded(child: MemberPlayStatusListView()),
-                Text(classPlayStatusController.classPlayStatus!.trainerClassId),
                 buildButton(
                   buttonText: "STOP WORKOUT",
                   onPressed: () {

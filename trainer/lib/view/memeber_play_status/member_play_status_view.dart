@@ -7,6 +7,7 @@ import 'package:trainer/controller/auth_controller.dart';
 import 'package:trainer/controller/member_play_status_controller.dart';
 import 'package:trainer/view/class_list/class_list_view.dart';
 import 'package:trainer/view/class_play/member_play_status_list_view.dart';
+import 'package:trainer/view/common/common_widgets.dart';
 
 class MemberPlayStatusView extends StatefulWidget {
   static const routeName = '/member_play_status';
@@ -27,9 +28,12 @@ class _MemberPlayStatusViewState extends State<MemberPlayStatusView>
   final AuthController _authController = Get.find<AuthController>();
   MemberPlayStatusController memberPlayStatusController = Get.find<MemberPlayStatusController>();
 
+  int memberWorkoutSpeed = 5;
+  int memberWorkoutStrength = 5;
+  int memberWorkoutCount = 10;
+
   @override
   void initState() {
-    _logger.d("sdlfnsdlfnsdlkfn");
     memberPlayStatusController.getMemberPlayStatus(widget.docId);
     super.initState();
   }
@@ -57,41 +61,74 @@ class _MemberPlayStatusViewState extends State<MemberPlayStatusView>
           ],
         ),
       ),
-      // bottomNavigationBar: Material(
-      //     color: Colors.white,
-      //     elevation: 10,
-      //     child: TabBar(
-      //       controller: _tabController,
-      //       tabs: [
-      //         _bottomTab(0, Icons.home, Icons.home_outlined),
-      //         _bottomTab(1, Icons.library_books, Icons.library_books_outlined),
-      //         _bottomTab(2, Icons.person, Icons.person_outlined),
-      //       ],
-      //       onTap: (index) => setState((){}),
-      //     )
-      // ),
       body: Obx(() => Container(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: memberPlayStatusController.memberPlayStatus == null
             ? const Center(child: CircularProgressIndicator())
             :Column(
               children: [
-                Text(memberPlayStatusController.memberPlayStatus!.name),
-                Text("Strength: ${memberPlayStatusController.memberPlayStatus!.strength}"),
-                Text("Count: ${memberPlayStatusController.memberPlayStatus!.count}"),
-                Text("Speed: ${memberPlayStatusController.memberPlayStatus!.speed}"),
-                ElevatedButton(
-                  onPressed: (){
-                    var memberPlayStatus = memberPlayStatusController.memberPlayStatus;
+                buildTitleText(text:"Member Info"),
+                buildNormalText(text: "Name: ${memberPlayStatusController.memberPlayStatus!.name}"),
+                Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
+                buildTitleText(text:"Member GEMS Info"),
+                buildNormalText(text: "Strength: ${memberPlayStatusController.memberPlayStatus!.strength}"),
+                buildNormalText(text: "Speed: ${memberPlayStatusController.memberPlayStatus!.speed}"),
+                buildNormalText(text: "Count: ${memberPlayStatusController.memberPlayStatus!.count}"),
+                Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
+                buildTitleText(text:"Member GEMS Control"),
+                buildDropdownButton(
+                    label: "Workout Speed",
+                    initialValue: memberWorkoutSpeed.toString(),
+                    callback: (value) {
+                      setState(() {
+                        _logger.d(value);
+                        memberWorkoutSpeed = int.parse(value!);
+                      });
+                    }),
+                buildDropdownButton(
+                    label: "Workout Strength",
+                    initialValue: memberWorkoutStrength.toString(),
+                    callback: (value) {
+                      _logger.d(value);
+                    }),
+                buildDropdownButton(
+                    label: "Workout Count",
+                    range: 30,
+                    initialValue: memberWorkoutCount.toString(),
+                    callback: (value) {
+                      _logger.d(value);
+                    }),
+                Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
+                SizedBox(
+                  height: 40,
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      var memberPlayStatus = memberPlayStatusController.memberPlayStatus;
+                      memberPlayStatus!.speed = memberWorkoutSpeed;
+                      memberPlayStatus.count = memberWorkoutCount;
+                      memberPlayStatus.strength = memberWorkoutStrength;
 
-                    Random random = Random();
-                    memberPlayStatus!.speed = random.nextInt(10);
-                    memberPlayStatus.count = random.nextInt(10);
-                    memberPlayStatus.strength = random.nextInt(10);
+                      memberPlayStatusController.updateMemberPlayStatus(memberPlayStatus);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.white,//change background color of button
+                      onPrimary: Colors.blue,//change text color of button
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      elevation: 15.0,
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.all(3.0),
+                      child: Text(
+                        "SET GEMS",
+                        style: TextStyle(fontSize: 15),
+                      ),
+                    ),
 
-                    memberPlayStatusController.updateMemberPlayStatus(memberPlayStatus);
-                  },
-                  child: Text("Update")
-                )
+                  ),
+                ),
             ],
           )
         )

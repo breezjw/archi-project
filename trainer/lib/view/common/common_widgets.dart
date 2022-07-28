@@ -46,9 +46,10 @@ Widget buildTextField({String label = "", TextEditingController? controller}) {
 
 Widget buildDropdownButton({
   String label = "",
+  int range = 10,
   String initialValue = "5",
   required Function(String?)? callback}) {
-  var list = List<int>.generate(10, (i) => i + 1)
+  var list = List<int>.generate(range, (i) => i + 1)
   .map((e) => e.toString()).toList();
 
   return Container(
