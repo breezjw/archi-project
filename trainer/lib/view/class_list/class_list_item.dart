@@ -33,7 +33,7 @@ class ClassListItem extends StatelessWidget {
           decoration: BoxDecoration(
             //TODO: Group Status
             // color: done ? Colors.grey : Colors.green[100],
-            color: Colors.green[100],
+            color: Colors.grey[200],
             borderRadius: BorderRadius.circular(10),
           ),
           child: Column(

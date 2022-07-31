@@ -10,41 +10,45 @@ class MemberPlayStatusService {
   CollectionReference memberPlayStatusRef =
     FirebaseFirestore.instance.collection(FireStoreMemberPlayStatus.collection);
 
-  Stream<List<Member>> listMemberPlayStatusStream(String classId) {
+  Stream<List<MemberPlayStatus>> listMemberPlayStatusStream(String classId) {
     return memberPlayStatusRef.where(FireStoreMemberPlayStatus.classId, isEqualTo: classId).snapshots()
     .map((query) => query.docs.map((doc) {
       _logger.d(doc.id);
-      var memberPlayStatus =  Member.fromSnapshot(doc);
+      var memberPlayStatus =  MemberPlayStatus.fromSnapshot(doc);
       memberPlayStatus.docId = doc.id;
 
       return memberPlayStatus;
     }).toList());
   }
 
-  Future<List<Member>> listMemberPlayStatus(String classId) {
+  Future<List<MemberPlayStatus>> listMemberPlayStatus(String classId) {
     return memberPlayStatusRef
         .where(FireStoreMemberPlayStatus.classId, isEqualTo: classId)
         .get()
-        .then((value) => value.docs.map((e) => Member.fromSnapshot(e)).toList());
+        .then((value) => value.docs.map((e) => MemberPlayStatus.fromSnapshot(e)).toList());
   }
 
-  Member _dataFromSnapshot(
+  MemberPlayStatus _dataFromSnapshot(
       DocumentSnapshot snapshot,
       ) {
-    var memberPlayStatus =  Member.fromJson(snapshot.data() as Map<String, dynamic>);
+
+    _logger.d(snapshot.data());
+
+    var memberPlayStatus =  MemberPlayStatus.fromJson(snapshot.data() as Map<String, dynamic>);
     memberPlayStatus.docId = snapshot.id;
 
     return memberPlayStatus;
   }
 
-  Stream<Member> getMemberPlayStatusStream(String id) {
+  Stream<MemberPlayStatus> getMemberPlayStatusStream(String id) {
+    _logger.d(id);
     return memberPlayStatusRef
         .doc(id)
         .snapshots()
         .map(_dataFromSnapshot);
   }
   
-  updateMemberPlayStatus(Member memberPlayStatus) {
+  updateMemberPlayStatus(MemberPlayStatus memberPlayStatus) {
     memberPlayStatusRef
       .doc(memberPlayStatus.docId)
       .update(

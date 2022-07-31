@@ -13,6 +13,7 @@ ClassPlayStatus _$ClassPlayStatusFromJson(Map<String, dynamic> json) =>
       status: json['status'] as String,
       startDate: dateTimeFromTimestamp(json['startDate'] as Timestamp),
       endDate: dateTimeFromTimestamp(json['endDate'] as Timestamp),
+      playCount: json['playCount'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$ClassPlayStatusToJson(ClassPlayStatus instance) =>
@@ -22,4 +23,5 @@ Map<String, dynamic> _$ClassPlayStatusToJson(ClassPlayStatus instance) =>
       'status': instance.status,
       'startDate': instance.startDate.toIso8601String(),
       'endDate': instance.endDate.toIso8601String(),
+      'playCount': instance.playCount,
     };

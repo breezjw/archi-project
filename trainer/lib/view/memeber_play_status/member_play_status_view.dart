@@ -8,6 +8,7 @@ import 'package:trainer/controller/member_play_status_controller.dart';
 import 'package:trainer/view/class_list/class_list_view.dart';
 import 'package:trainer/view/class_play/member_play_status_list_view.dart';
 import 'package:trainer/view/common/common_widgets.dart';
+import 'package:trainer/view/common/util.dart';
 
 class MemberPlayStatusView extends StatefulWidget {
   static const routeName = '/member_play_status';
@@ -69,11 +70,24 @@ class _MemberPlayStatusViewState extends State<MemberPlayStatusView>
               children: [
                 buildTitleText(text:"Member Info"),
                 buildNormalText(text: "Name: ${memberPlayStatusController.memberPlayStatus!.name}"),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+                  child: Text(
+                    "Workout Status: ${memberPlayStatusController.memberPlayStatus!.workoutStatus.toUpperCase()}",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17,
+                      color: workoutStatusColor[memberPlayStatusController.memberPlayStatus!.workoutStatus],
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                ),
                 Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
                 buildTitleText(text:"Member GEMS Info"),
-                buildNormalText(text: "Speed: ${memberPlayStatusController.memberPlayStatus!.speed}"),
-                buildNormalText(text: "Strength: ${memberPlayStatusController.memberPlayStatus!.strength}"),
-                buildNormalText(text: "Count: ${memberPlayStatusController.memberPlayStatus!.count}"),
+                buildNormalText(text: "Speed: ${memberPlayStatusController.memberPlayStatus!.realtimeSpeed.last.values.last}"),
+                buildNormalText(text: "Strength: ${memberPlayStatusController.memberPlayStatus!.realtimeStrength.last.values.last}"),
+                buildNormalText(text: "Count: ${memberPlayStatusController.memberPlayStatus!.realtimeCount}"),
                 Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
                 buildTitleText(text:"Member GEMS Control"),
                 buildDropdownButton(

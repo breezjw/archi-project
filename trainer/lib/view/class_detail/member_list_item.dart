@@ -7,7 +7,7 @@ import 'package:trainer/view/class_detail/class_detail_view.dart';
 import 'package:trainer/view/memeber_play_status/member_play_status_view.dart';
 
 class MemberListItem extends StatelessWidget {
-  final Member memberPlayStatus;
+  final MemberPlayStatus memberPlayStatus;
 
   const MemberListItem({
     Key? key,
@@ -33,7 +33,7 @@ class MemberListItem extends StatelessWidget {
           decoration: BoxDecoration(
             //TODO: Group Status
             // color: done ? Colors.grey : Colors.green[100],
-            color: Colors.red[100],
+            color: Colors.grey[200],
             borderRadius: BorderRadius.circular(10),
           ),
           child: Column(

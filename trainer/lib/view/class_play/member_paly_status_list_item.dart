@@ -4,10 +4,11 @@ import 'package:logger/logger.dart';
 import 'package:trainer/model/member_play_status.dart';
 import 'package:trainer/model/trainer_class.dart';
 import 'package:trainer/view/class_detail/class_detail_view.dart';
+import 'package:trainer/view/common/util.dart';
 import 'package:trainer/view/memeber_play_status/member_play_status_view.dart';
 
 class MemberPlayStatusListItem extends StatelessWidget {
-  final Member memberPlayStatus;
+  final MemberPlayStatus memberPlayStatus;
 
   const MemberPlayStatusListItem({
     Key? key,
@@ -19,7 +20,7 @@ class MemberPlayStatusListItem extends StatelessWidget {
     final Logger _logger = Logger();
 
     _logger.d(memberPlayStatus.name);
-    _logger.d(memberPlayStatus.docId);
+    _logger.d(memberPlayStatus.realtimeStrength.length);
 
     return Container(
       padding: const EdgeInsets.only(top: 5),
@@ -33,8 +34,7 @@ class MemberPlayStatusListItem extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             //TODO: Group Status
-            // color: done ? Colors.grey : Colors.green[100],
-            color: Colors.red[100],
+            color: workoutStatusColor[memberPlayStatus.workoutStatus],
             borderRadius: BorderRadius.circular(10),
           ),
           child: Column(
@@ -47,6 +47,24 @@ class MemberPlayStatusListItem extends StatelessWidget {
                     style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20
+                    ),
+                  ),
+                  Text(
+                    "status: ${memberPlayStatus.workoutStatus.toUpperCase()}",
+                    style: const TextStyle(
+                        fontSize: 17
+                    ),
+                  ),
+                  Text(
+                    "speed: ${memberPlayStatus.realtimeSpeed.last.values.last}",
+                    style: const TextStyle(
+                        fontSize: 17
+                    ),
+                  ),
+                  Text(
+                    "strength: ${memberPlayStatus.realtimeStrength.last.values.last}",
+                    style: const TextStyle(
+                        fontSize: 17
                     ),
                   ),
                 ]),

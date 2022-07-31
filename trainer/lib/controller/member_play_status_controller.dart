@@ -10,11 +10,11 @@ class MemberPlayStatusController extends GetxController {
 
   MemberPlayStatusController({required this.memberPlayStatusService});
 
-  final RxList<Member> listMemberPlayStatus = RxList<Member>();
-  final Rx<Member?> _memberPlayStatus = Rx<Member?>(null);
+  final RxList<MemberPlayStatus> listMemberPlayStatus = RxList<MemberPlayStatus>();
+  final Rx<MemberPlayStatus?> _memberPlayStatus = Rx<MemberPlayStatus?>(null);
   // final RxBool _isLoadingTestGroup = RxBool(false);
 
-  Member? get memberPlayStatus => _memberPlayStatus.value;
+  MemberPlayStatus? get memberPlayStatus => _memberPlayStatus.value;
 
   @override
   void onInit() {
@@ -46,7 +46,7 @@ class MemberPlayStatusController extends GetxController {
   //   return testGroup;
   // }
 
-  Future<void> updateMemberPlayStatus(Member memberPlayStatus) async {
+  Future<void> updateMemberPlayStatus(MemberPlayStatus memberPlayStatus) async {
     _logger.d("memberPlayStatus");
     memberPlayStatusService.updateMemberPlayStatus(memberPlayStatus);
   }
