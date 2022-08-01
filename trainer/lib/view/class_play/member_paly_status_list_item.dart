@@ -20,7 +20,7 @@ class MemberPlayStatusListItem extends StatelessWidget {
     final Logger _logger = Logger();
 
     _logger.d(memberPlayStatus.name);
-    _logger.d(memberPlayStatus.realtimeStrength.length);
+    _logger.d(memberPlayStatus.strength.length);
 
     return Container(
       padding: const EdgeInsets.only(top: 5),
@@ -56,13 +56,13 @@ class MemberPlayStatusListItem extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "speed: ${memberPlayStatus.realtimeSpeed.last.values.last}",
+                    "speed: ${memberPlayStatus.speed.values.last}",
                     style: const TextStyle(
                         fontSize: 17
                     ),
                   ),
                   Text(
-                    "strength: ${memberPlayStatus.realtimeStrength.last.values.last}",
+                    "strength: ${memberPlayStatus.strength.values.last}",
                     style: const TextStyle(
                         fontSize: 17
                     ),

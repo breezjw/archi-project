@@ -11,13 +11,14 @@ final Logger logger = Logger();
 class FireStoreMemberPlayStatus {
   static const String collection = "memberPlayStatus";
   static const String classId = "classId";
+  static const String playCount = "playCount";
   static const String name = "name";
+  static const String controlSpeed = "controlSpeed";
+  static const String controlCount = "controlCount";
+  static const String controlStrength = "controlStrength";
   static const String speed = "speed";
   static const String count = "count";
   static const String strength = "strength";
-  static const String realtimeSpeed = "realtimeSpeed";
-  static const String realtimeCount = "realtimeCount";
-  static const String realtimeStrength = "realtimeStrength";
   static const String workoutStatus = "workoutStatus";
 }
 
@@ -26,25 +27,27 @@ class MemberPlayStatus {
   //TODO: docId
   String docId = "";
   String classId;
+  int playCount;
   String name;
-  int speed;
-  int count;
-  int strength;
-  List<Map<int, int>> realtimeSpeed;
-  int realtimeCount;
-  List<Map<int, int>> realtimeStrength;
+  int controlSpeed;
+  int controlCount;
+  int controlStrength;
+  Map<int, int> speed;
+  Map<int, int> count;
+  Map<int, int> strength;
   String workoutStatus;
 
   MemberPlayStatus({
     docId,
     required this.classId,
+    required this.playCount,
     required this.name,
+    required this.controlSpeed,
+    required this.controlCount,
+    required this.controlStrength,
     required this.speed,
     required this.count,
     required this.strength,
-    required this.realtimeSpeed,
-    required this.realtimeCount,
-    required this.realtimeStrength,
     required this.workoutStatus,
   });
 
@@ -55,24 +58,25 @@ class MemberPlayStatus {
     }).toList();
   }
 
+  static Map<int, int> convertMap(Map<String, dynamic> mapFirestore) {
+    return mapFirestore.map((key, value) => MapEntry(int.parse(key), value as int));
+  }
+
   factory MemberPlayStatus.fromJson(Map<String, dynamic> json) => _$MemberPlayStatusFromJson(json);
   Map<String, dynamic> toJson() => _$MemberPlayStatusToJson(this);
 
   factory MemberPlayStatus.fromSnapshot(DocumentSnapshot snap) {
-
-      var speeds = convertListMap(snap.get(FireStoreMemberPlayStatus.realtimeSpeed) as List);
-      var strengths = convertListMap(snap.get(FireStoreMemberPlayStatus.realtimeStrength) as List);
-
       return MemberPlayStatus(
       docId: snap.id,
       classId: snap.get(FireStoreMemberPlayStatus.classId),
+      playCount: snap.get(FireStoreMemberPlayStatus.playCount),
       name: snap.get(FireStoreMemberPlayStatus.name),
-      speed: snap.get(FireStoreMemberPlayStatus.speed),
-      count: snap.get(FireStoreMemberPlayStatus.count),
-      strength: snap.get(FireStoreMemberPlayStatus.strength),
-      realtimeSpeed: speeds,
-      realtimeCount: snap.get(FireStoreMemberPlayStatus.realtimeCount),
-      realtimeStrength: strengths,
+      controlSpeed: snap.get(FireStoreMemberPlayStatus.controlSpeed),
+      controlCount: snap.get(FireStoreMemberPlayStatus.controlCount),
+      controlStrength: snap.get(FireStoreMemberPlayStatus.controlStrength),
+      speed: convertMap(snap.get(FireStoreMemberPlayStatus.speed)),
+      count: convertMap(snap.get(FireStoreMemberPlayStatus.count)),
+      strength: convertMap(snap.get(FireStoreMemberPlayStatus.count)),
       workoutStatus: snap.get(FireStoreMemberPlayStatus.workoutStatus),
     );
   }

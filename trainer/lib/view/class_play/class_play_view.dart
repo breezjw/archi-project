@@ -107,9 +107,9 @@ class _ClassPlayViewState extends State<ClassPlayView>
                     onPressed: () {
                       memberPlayStatusController.listMemberPlayStatus.forEach((element) {
                         var memberPlayStatus = element;
-                        memberPlayStatus.speed = classWorkoutSpeed;
-                        memberPlayStatus.count = classWorkoutStrength;
-                        memberPlayStatus.strength = classWorkoutCount;
+                        memberPlayStatus.controlSpeed = classWorkoutSpeed;
+                        memberPlayStatus.controlCount = classWorkoutStrength;
+                        memberPlayStatus.controlStrength = classWorkoutCount;
 
                         _logger.d(memberPlayStatus.toJson());
 

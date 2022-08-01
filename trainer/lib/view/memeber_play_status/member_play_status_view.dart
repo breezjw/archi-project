@@ -85,9 +85,9 @@ class _MemberPlayStatusViewState extends State<MemberPlayStatusView>
                 ),
                 Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
                 buildTitleText(text:"Member GEMS Info"),
-                buildNormalText(text: "Speed: ${memberPlayStatusController.memberPlayStatus!.realtimeSpeed.last.values.last}"),
-                buildNormalText(text: "Strength: ${memberPlayStatusController.memberPlayStatus!.realtimeStrength.last.values.last}"),
-                buildNormalText(text: "Count: ${memberPlayStatusController.memberPlayStatus!.realtimeCount}"),
+                buildNormalText(text: "Speed: ${memberPlayStatusController.memberPlayStatus!.speed.values.last}"),
+                buildNormalText(text: "Strength: ${memberPlayStatusController.memberPlayStatus!.strength.values.last}"),
+                buildNormalText(text: "Count: ${memberPlayStatusController.memberPlayStatus!.count.values.last}"),
                 Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
                 buildTitleText(text:"Member GEMS Control"),
                 buildDropdownButton(
@@ -125,9 +125,9 @@ class _MemberPlayStatusViewState extends State<MemberPlayStatusView>
                   child: ElevatedButton(
                     onPressed: () {
                       var memberPlayStatus = memberPlayStatusController.memberPlayStatus;
-                      memberPlayStatus!.speed = memberWorkoutSpeed;
-                      memberPlayStatus.count = memberWorkoutCount;
-                      memberPlayStatus.strength = memberWorkoutStrength;
+                      memberPlayStatus!.controlSpeed = memberWorkoutSpeed;
+                      memberPlayStatus.controlCount = memberWorkoutCount;
+                      memberPlayStatus.controlStrength = memberWorkoutStrength;
 
                       memberPlayStatusController.updateMemberPlayStatus(memberPlayStatus);
                     },
