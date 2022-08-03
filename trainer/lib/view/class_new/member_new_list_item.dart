@@ -15,7 +15,7 @@ class MemberNewListItem extends StatelessWidget {
     final Logger _logger = Logger();
 
     _logger.d(member.name);
-    _logger.d(member.docId);
+    _logger.d(member.memberId);
 
     return Container(
       padding: const EdgeInsets.only(top: 5),

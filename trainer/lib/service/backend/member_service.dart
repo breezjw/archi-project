@@ -9,22 +9,25 @@ class MemberService {
   final Logger logger = Logger();
 
   Future<List<Member>> getMemberList() async {
-    // final url = Uri.parse(backendUrl + "todos/1");
-    //
-    // var response = await http.get(url);
-    // if (response.statusCode == 200) {
-    //   var jsonResponse = convert.jsonDecode(response.body) as Map<String, dynamic>;
-    //
-    //   logger.d(jsonResponse);
-    // } else {
-    //   logger.e('Request failed with status: ${response.statusCode}.');
-    // }
-
     List<Member> retMembers= [];
+    final url = Uri.parse(BACKEND_URL + LIST_MEMBER_API);
 
-    retMembers.add(Member(docId: "", name: "AAA"));
-    retMembers.add(Member(docId: "", name: "BBB"));
-    retMembers.add(Member(docId: "", name: "CCC"));
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+
+      logger.d(response.body);
+
+      // var jsonResponse = convert.jsonDecode(response.body) as Map<String, dynamic>;
+      var members = convert.jsonDecode(response.body) as List<dynamic>;
+      members.forEach((element) {
+        var member = element as Map<String, dynamic>;
+        retMembers.add(Member(memberId: member["memberId"], name: member["name"]), );
+      });
+
+      logger.d(retMembers);
+    } else {
+      logger.e('Request failed with status: ${response.statusCode}.');
+    }
 
     return retMembers;
   }
@@ -33,9 +36,9 @@ class MemberService {
 
     List<Member> retMembers= [];
 
-    retMembers.add(Member(docId: "", name: "AAA"));
-    retMembers.add(Member(docId: "", name: "BBB"));
-    retMembers.add(Member(docId: "", name: "CCC"));
+    retMembers.add(Member(memberId: "", name: "AAA"));
+    retMembers.add(Member(memberId: "", name: "BBB"));
+    retMembers.add(Member(memberId: "", name: "CCC"));
 
     return retMembers;
   }

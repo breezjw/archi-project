@@ -23,7 +23,7 @@ class MemberController extends GetxController {
   }
 
    void getMemberList() async {
-    memberService.getMemberListMock().then((value) {
+    memberService.getMemberList().then((value) {
       listMember.value = value;
     });
   }

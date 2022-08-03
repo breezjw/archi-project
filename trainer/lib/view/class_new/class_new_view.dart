@@ -41,6 +41,8 @@ class _ClassNewViewState extends State<ClassNewView>
   @override
   Widget build(BuildContext context) {
 
+    memberController.getMemberList();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("GEMS Trainer"),
@@ -60,7 +62,7 @@ class _ClassNewViewState extends State<ClassNewView>
       ),
       body: Obx(() => Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          child: memberController.listMember.isEmpty
+          child: memberController.listMember.length == 0
             ? const Center(child: CircularProgressIndicator())
             :Column(
               children: [

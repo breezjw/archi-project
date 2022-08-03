@@ -2,11 +2,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Member {
-  final String docId;
+  final String memberId;
   final String name;
 
   Member({
-    required this.docId,
+    required this.memberId,
     required this.name,
   });
 

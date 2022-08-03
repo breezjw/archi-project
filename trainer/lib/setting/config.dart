@@ -1,2 +1,3 @@
 
-const backendUrl = "https://jsonplaceholder.typicode.com/";
+const BACKEND_URL = "http://35.216.2.238/";
+const LIST_MEMBER_API = "member/list";
