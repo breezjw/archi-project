@@ -36,9 +36,9 @@ class MemberService {
 
     List<Member> retMembers= [];
 
-    retMembers.add(Member(memberId: "", name: "AAA"));
-    retMembers.add(Member(memberId: "", name: "BBB"));
-    retMembers.add(Member(memberId: "", name: "CCC"));
+    retMembers.add(Member(memberId: "aaa", name: "AAA"));
+    retMembers.add(Member(memberId: "bbb", name: "BBB"));
+    retMembers.add(Member(memberId: "ccc", name: "CCC"));
 
     return retMembers;
   }

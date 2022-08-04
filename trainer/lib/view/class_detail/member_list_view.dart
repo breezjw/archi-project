@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:trainer/controller/class_controller.dart';
+import 'package:trainer/controller/member_controller.dart';
 import 'package:trainer/controller/member_play_status_controller.dart';
 import 'package:trainer/service/firestore/member_play_status_service.dart';
 import 'package:trainer/view/class_detail/member_list_item.dart';
@@ -15,15 +16,16 @@ class MemberListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MemberPlayStatusController memberPlayStatusController = Get.find<MemberPlayStatusController>();
+    // MemberPlayStatusController memberPlayStatusController = Get.find<MemberPlayStatusController>();
+    MemberController memberController = Get.find<MemberController>();
 
-    return Obx(() => memberPlayStatusController.listMemberPlayStatus.isEmpty
+    return Obx(() => memberController.listMember.isEmpty
       ? const Center(child: CircularProgressIndicator())
       : ListView.builder(
-        itemCount: memberPlayStatusController.listMemberPlayStatus.length,
+        itemCount: memberController.listMember.length,
         itemBuilder: (context, index) {
           return MemberListItem(
-            memberPlayStatus: memberPlayStatusController.listMemberPlayStatus[index]
+            member: memberController.listMember[index]
           );
         }
     )

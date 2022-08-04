@@ -14,6 +14,7 @@ class MemberPlayStatusListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    logger.d("HERE");
     MemberPlayStatusController memberPlayStatusController = Get.find<MemberPlayStatusController>();
 
     return Obx(() => memberPlayStatusController.listMemberPlayStatus.isEmpty

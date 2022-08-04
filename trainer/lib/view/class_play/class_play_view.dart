@@ -21,13 +21,14 @@ class ClassPlayView extends StatefulWidget {
 class _ClassPlayViewState extends State<ClassPlayView>
     with SingleTickerProviderStateMixin{
 
-  final Logger _logger = Logger();
+  final Logger logger = Logger();
 
   final AuthController _authController = AuthController.to;
   ClassPlayStatusController classPlayStatusController = Get.find<ClassPlayStatusController>();
   MemberPlayStatusController memberPlayStatusController = Get.find<MemberPlayStatusController>();
 
-  final String classId = Get.arguments;
+  final String classId = Get.arguments["classId"];
+  final int playCount = int.parse(Get.arguments["playCount"]);
 
   int classWorkoutSpeed = 5;
   int classWorkoutStrength = 5;
@@ -35,7 +36,9 @@ class _ClassPlayViewState extends State<ClassPlayView>
 
   @override
   void initState() {
+    logger.d(classId);
     classPlayStatusController.bindClassPlayStatus(classId);
+    memberPlayStatusController.loadListMemberPlayStatus(classId, playCount);
 
     super.initState();
   }
@@ -77,7 +80,7 @@ class _ClassPlayViewState extends State<ClassPlayView>
                   initialValue: classWorkoutSpeed.toString(),
                   callback: (value) {
                     setState(() {
-                      _logger.d(value);
+                      logger.d(value);
                       classWorkoutSpeed = int.parse(value!);
                     });
                 }),
@@ -86,7 +89,7 @@ class _ClassPlayViewState extends State<ClassPlayView>
                   initialValue: classWorkoutStrength.toString(),
                   callback: (value) {
                     setState(() {
-                      _logger.d(value);
+                      logger.d(value);
                       classWorkoutStrength = int.parse(value!);
                     });
                 }),
@@ -96,7 +99,7 @@ class _ClassPlayViewState extends State<ClassPlayView>
                   initialValue: classWorkoutCount.toString(),
                   callback: (value) {
                     setState(() {
-                      _logger.d(value);
+                      logger.d(value);
                       classWorkoutCount = int.parse(value!);
                     });
                 }),
@@ -111,7 +114,7 @@ class _ClassPlayViewState extends State<ClassPlayView>
                         memberPlayStatus.controlCount = classWorkoutStrength;
                         memberPlayStatus.controlStrength = classWorkoutCount;
 
-                        _logger.d(memberPlayStatus.toJson());
+                        logger.d(memberPlayStatus.toJson());
 
                         memberPlayStatusController.updateMemberPlayStatus(memberPlayStatus);
                       });

@@ -19,15 +19,15 @@ class MemberPlayStatusController extends GetxController {
   @override
   void onInit() {
     // getMemberPlayStatus();
-    loadListMemberPlayStatus();
+    // loadListMemberPlayStatus();
     super.onInit();
   }
 
-  Future<void> loadListMemberPlayStatus() async {
+  Future<void> loadListMemberPlayStatus(String classId, int playCount) async {
     // _isLoadingTestGroup.value = true;
     // testGroups.value = await testGroupService.listTestGroup("aaa");
     // _isLoadingTestGroup.value = false;
-    listMemberPlayStatus.bindStream(memberPlayStatusService.listMemberPlayStatusStream("class1"));
+    listMemberPlayStatus.bindStream(memberPlayStatusService.listMemberPlayStatusStream(classId, playCount));
   }
 
   Future<void> getMemberPlayStatus(String docId) async {

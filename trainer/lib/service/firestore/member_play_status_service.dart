@@ -10,8 +10,10 @@ class MemberPlayStatusService {
   CollectionReference memberPlayStatusRef =
     FirebaseFirestore.instance.collection(FireStoreMemberPlayStatus.collection);
 
-  Stream<List<MemberPlayStatus>> listMemberPlayStatusStream(String classId) {
-    return memberPlayStatusRef.where(FireStoreMemberPlayStatus.classId, isEqualTo: classId).snapshots()
+  Stream<List<MemberPlayStatus>> listMemberPlayStatusStream(String classId, int playCount) {
+    return memberPlayStatusRef.where(FireStoreMemberPlayStatus.classId, isEqualTo: classId)
+    .where(FireStoreMemberPlayStatus.playCount, isEqualTo: playCount)
+    .snapshots()
     .map((query) => query.docs.map((doc) {
       _logger.d(doc.id);
       var memberPlayStatus =  MemberPlayStatus.fromSnapshot(doc);

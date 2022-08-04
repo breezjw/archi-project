@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:trainer/controller/auth_controller.dart';
 import 'package:trainer/controller/class_play_status_controller.dart';
+import 'package:trainer/controller/member_controller.dart';
+import 'package:trainer/controller/member_play_status_controller.dart';
 import 'package:trainer/view/class_detail/member_list_view.dart';
 import 'package:trainer/view/class_list//class_list_view.dart';
 import 'package:trainer/view/common/common_widgets.dart';
@@ -25,12 +27,14 @@ class _ClassDetailViewState extends State<ClassDetailView>
 
   final AuthController _authController = AuthController.to;
   ClassPlayStatusController classPlayStatusController = Get.find<ClassPlayStatusController>();
+  MemberController memberController = Get.find<MemberController>();
 
   final String classId = Get.arguments;
 
   @override
   void initState() {
     classPlayStatusController.bindClassPlayStatus(classId);
+    memberController.getMemberList();
 
     super.initState();
   }
@@ -70,7 +74,8 @@ class _ClassDetailViewState extends State<ClassDetailView>
                   buttonText: "START WORKOUT",
                   onPressed: () {
                     classPlayStatusController.startClassPlayStatus(classId)
-                    .then((value) => Get.toNamed(ClassPlayView.routeName, arguments: classId));
+                    .then((value) => Get.toNamed(ClassPlayView.routeName,
+                        arguments: {"classId": classId, "playCount": classPlayStatusController.classPlayStatus!.playCount.toString()}));
                   }
                 )
               ],
