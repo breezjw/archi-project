@@ -4,6 +4,7 @@ import 'package:logger/logger.dart';
 import 'package:trainer/model/member_play_status.dart';
 import 'package:trainer/model/trainer_class.dart';
 import 'package:trainer/view/class_detail/class_detail_view.dart';
+import 'package:trainer/view/member_detail/member_detail_view.dart';
 import 'package:trainer/view/memeber_play_status/member_play_status_view.dart';
 
 class MemberListItem extends StatelessWidget {
@@ -27,7 +28,7 @@ class MemberListItem extends StatelessWidget {
         onTap: () {
           //TODO: Group Detail
           // _logger.d("HERE");
-          // Get.toNamed(MemberPlayStatusView.routeName, arguments: memberPlayStatus.docId);
+          Get.toNamed(MemberDetailView.routeName, arguments: memberPlayStatus.docId);
         },
         child: Container(
           decoration: BoxDecoration(
