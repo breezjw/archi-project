@@ -75,7 +75,7 @@ class _ClassDetailViewState extends State<ClassDetailView>
                   onPressed: () {
                     classPlayStatusController.startClassPlayStatus(classId)
                     .then((value) => Get.toNamed(ClassPlayView.routeName,
-                        arguments: {"classId": classId, "playCount": classPlayStatusController.classPlayStatus!.playCount.toString()}));
+                        arguments: {"classId": classId, "playCount": (classPlayStatusController.classPlayStatus!.playCount+1).toString()}));
                   }
                 )
               ],

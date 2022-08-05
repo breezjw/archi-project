@@ -24,6 +24,8 @@ class MemberPlayStatusService {
   }
 
   Future<List<MemberPlayStatus>> listMemberPlayStatus(String classId) {
+    _logger.d(classId);
+
     return memberPlayStatusRef
         .where(FireStoreMemberPlayStatus.classId, isEqualTo: classId)
         .get()
@@ -48,6 +50,32 @@ class MemberPlayStatusService {
         .doc(id)
         .snapshots()
         .map(_dataFromSnapshot);
+  }
+
+  Future<String?> addMemberPlayStatus(String classId, String memberId, String memberName) async {
+    String? docId = "${classId}_$memberId";
+
+    await memberPlayStatusRef.doc(docId).set({
+      FireStoreMemberPlayStatus.classId: classId,
+      FireStoreMemberPlayStatus.name: memberName,
+      FireStoreMemberPlayStatus.playCount: 0,
+      FireStoreMemberPlayStatus.workoutStatus: "normal",
+      FireStoreMemberPlayStatus.controlCount: 0,
+      FireStoreMemberPlayStatus.controlSpeed: 0,
+      FireStoreMemberPlayStatus.controlStrength: 0,
+      FireStoreMemberPlayStatus.count: {},
+      FireStoreMemberPlayStatus.speed: {},
+      FireStoreMemberPlayStatus.strength: {},
+    })
+    .then((value) {
+      logger.d("MemberPlayStatus added");
+    })
+    .catchError((error) {
+      logger.e("Failed to add MemberPlayStatus: $error");
+      docId = null;
+    });
+
+    return docId;
   }
   
   updateMemberPlayStatus(MemberPlayStatus memberPlayStatus) {

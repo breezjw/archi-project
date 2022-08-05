@@ -66,6 +66,7 @@ class AppRoutes {
         // Get.put(AuthController(authService: injector.get<AuthService>()));
         Get.put(ClassController(testGroupService: injector.get<ClassService>()));
         Get.put(MemberController(memberService: injector.get<MemberService>()));
+        Get.put(MemberPlayStatusController(memberPlayStatusService: injector.get<MemberPlayStatusService>()));
       }),
     ),
     GetPage(

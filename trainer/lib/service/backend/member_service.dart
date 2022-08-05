@@ -32,6 +32,26 @@ class MemberService {
     return retMembers;
   }
 
+  Future<Member?> getMember(String id) async {
+    Member? retMember;
+    final url = Uri.parse(BACKEND_URL + GET_MEMBER_API + "/" + id);
+
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+
+      logger.d(response.body);
+
+      var member = convert.jsonDecode(response.body) as Map<String, dynamic>;
+      retMember = Member(memberId: member["memberId"], name: member["name"]);
+
+      logger.d(retMember);
+    } else {
+      logger.e('Request failed with status: ${response.statusCode}.');
+    }
+
+    return retMember;
+  }
+
   Future<List<Member>> getMemberListMock() async {
 
     List<Member> retMembers= [];

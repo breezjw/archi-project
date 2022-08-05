@@ -38,13 +38,10 @@ class MemberPlayStatusController extends GetxController {
     _memberPlayStatus.bindStream(memberPlayStatusService.getMemberPlayStatusStream(docId));
   }
 
-  // TrainerClass? getArticle(String id) {
-  //   final testGroup = testGroups.firstWhereOrNull((element) =>
-  //   element.docId == id,
-  //   );
-  //
-  //   return testGroup;
-  // }
+  Future<void> addMemberPlayStatus(String classId, String memberId, String memberName) async {
+    _logger.d("memberPlayStatus");
+    memberPlayStatusService.addMemberPlayStatus(classId, memberId, memberName);
+  }
 
   Future<void> updateMemberPlayStatus(MemberPlayStatus memberPlayStatus) async {
     _logger.d("memberPlayStatus");

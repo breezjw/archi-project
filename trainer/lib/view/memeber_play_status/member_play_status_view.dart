@@ -85,9 +85,18 @@ class _MemberPlayStatusViewState extends State<MemberPlayStatusView>
                 ),
                 Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
                 buildTitleText(text:"Member GEMS Info"),
-                buildNormalText(text: "Speed: ${memberPlayStatusController.memberPlayStatus!.speed.values.last}"),
-                buildNormalText(text: "Strength: ${memberPlayStatusController.memberPlayStatus!.strength.values.last}"),
-                buildNormalText(text: "Count: ${memberPlayStatusController.memberPlayStatus!.count.values.last}"),
+                buildNormalText(text: "Speed: ${
+                  memberPlayStatusController.memberPlayStatus!.speed.isEmpty ?
+                    0 : memberPlayStatusController.memberPlayStatus!.speed.values.last
+                }"),
+                buildNormalText(text: "Strength: ${
+                  memberPlayStatusController.memberPlayStatus!.strength.isEmpty ?
+                    0 : memberPlayStatusController.memberPlayStatus!.strength.values.last
+                }"),
+                buildNormalText(text: "Count: ${
+                  memberPlayStatusController.memberPlayStatus!.count.isEmpty ?
+                    0 : memberPlayStatusController.memberPlayStatus!.count.values.last
+                }"),
                 Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
                 buildTitleText(text:"Member GEMS Control"),
                 buildDropdownButton(

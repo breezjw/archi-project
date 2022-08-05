@@ -22,12 +22,22 @@ class MemberController extends GetxController {
     super.onInit();
   }
 
-   void getMemberList() async {
-    // memberService.getMemberList().then((value) {
-    //   listMember.value = value;
-    // });
-     memberService.getMemberListMock().then((value) {
-       listMember.value = value;
-     });
+  void getMemberList() async {
+    memberService.getMemberList().then((value) {
+      listMember.value = value;
+    });
+    //  memberService.getMemberListMock().then((value) {
+    //    listMember.value = value;
+    //  });
+  }
+
+  Member? getMember(String id) {
+    for (var member in listMember.value) {
+      if (member.memberId == id) {
+        return member;
+      }
+    }
+
+    return null;
   }
 }

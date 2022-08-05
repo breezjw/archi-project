@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:trainer/controller/auth_controller.dart';
 import 'package:trainer/controller/gems_controller.dart';
+import 'package:trainer/controller/member_controller.dart';
 import 'package:trainer/controller/member_play_status_controller.dart';
+import 'package:trainer/model/member.dart';
 import 'package:trainer/view/class_list/class_list_view.dart';
 import 'package:trainer/view/class_play/member_play_status_list_view.dart';
 import 'package:trainer/view/common/common_widgets.dart';
@@ -28,27 +30,20 @@ class _MemberDetailViewState extends State<MemberDetailView>
   final Logger logger = Logger();
 
   final AuthController _authController = AuthController.to;
-  MemberPlayStatusController memberPlayStatusController = Get.find<MemberPlayStatusController>();
+  MemberController memberController = Get.find<MemberController>();
   GemsController gemsController = Get.find<GemsController>();
 
-  int memberWorkoutSpeed = 5;
-  int memberWorkoutStrength = 5;
-  int memberWorkoutCount = 10;
+  Member? member;
 
   int checkedGems = -1;
 
   @override
   void initState() {
-    memberPlayStatusController.getMemberPlayStatus(widget.docId);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-
-    // ClassController classController = Get.find<ClassController>();
-
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("GEMS Trainer"),
@@ -68,12 +63,13 @@ class _MemberDetailViewState extends State<MemberDetailView>
       ),
       body: Obx(() => Container(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          child: memberPlayStatusController.memberPlayStatus == null
+          child: memberController.listMember.isEmpty
             ? const Center(child: CircularProgressIndicator())
             :Column(
               children: [
                 buildTitleText(text:"Member Info"),
-                buildNormalText(text: "Name: ${memberPlayStatusController.memberPlayStatus!.name}"),
+                buildNormalText(text: "Name: ${memberController.getMember(widget.docId)!.name}"),
+                buildNormalText(text: "ID: ${memberController.getMember(widget.docId)!.memberId}"),
                 Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
                 buildTitleText(text:"Assigned GEMS"),
                 buildNormalText(text:"None"),

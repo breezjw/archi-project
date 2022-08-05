@@ -4,6 +4,7 @@ import 'package:logger/logger.dart';
 import 'package:trainer/controller/auth_controller.dart';
 import 'package:trainer/controller/class_play_status_controller.dart';
 import 'package:trainer/controller/member_controller.dart';
+import 'package:trainer/controller/member_play_status_controller.dart';
 import 'package:trainer/service/backend/member_service.dart';
 import 'package:trainer/view/class_list/class_list_view.dart';
 import 'package:trainer/view/class_new/member_new_list_item.dart';
@@ -28,6 +29,7 @@ class _ClassNewViewState extends State<ClassNewView>
   final AuthController _authController = AuthController.to;
   MemberController memberController = Get.find<MemberController>();
   ClassPlayStatusController classPlayStatusController = Get.find<ClassPlayStatusController>();
+  MemberPlayStatusController memberPlayStatusController = Get.find<MemberPlayStatusController>();
 
   late List<bool> _isChecked;
   TextEditingController classNameTextController = TextEditingController();
@@ -92,7 +94,16 @@ class _ClassNewViewState extends State<ClassNewView>
                     buttonText: "ADD CLASS",
                     onPressed: () {
                       classPlayStatusController.addClassPlayStatus(classNameTextController.text)
-                      .then((value) => Get.toNamed("/"));
+                      .then((value) {
+                        _isChecked.forEach((element) {
+                          memberPlayStatusController.addMemberPlayStatus(
+                              classNameTextController.text,
+                              memberController.listMember[0].memberId,
+                              memberController.listMember[0].name
+                          );
+                          Get.toNamed("/");
+                        });
+                      });
                     }
                 )
               ],

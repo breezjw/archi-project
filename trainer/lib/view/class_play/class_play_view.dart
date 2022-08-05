@@ -71,7 +71,7 @@ class _ClassPlayViewState extends State<ClassPlayView>
             ? const Center(child: CircularProgressIndicator())
             : Column(
               children: [
-                buildTitleText(text:"Class Info"),
+                buildTitleText(text:"Class #$playCount"),
                 buildNormalText(text: "Workout Type: Diet Class"),
                 Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
                 buildTitleText(text:"Class GEMS Control"),

@@ -56,13 +56,17 @@ class MemberPlayStatusListItem extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "speed: ${memberPlayStatus.speed.values.last}",
+                    "speed: ${
+                      memberPlayStatus.speed.isEmpty ? 0: memberPlayStatus.speed.values.last
+                    }",
                     style: const TextStyle(
                         fontSize: 17
                     ),
                   ),
                   Text(
-                    "strength: ${memberPlayStatus.strength.values.last}",
+                    "strength: ${
+                        memberPlayStatus.strength.isEmpty ? 0: memberPlayStatus.strength.values.last
+                    }",
                     style: const TextStyle(
                         fontSize: 17
                     ),
