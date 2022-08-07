@@ -94,15 +94,18 @@ class _ClassNewViewState extends State<ClassNewView>
                     buttonText: "ADD CLASS",
                     onPressed: () {
                       classPlayStatusController.addClassPlayStatus(classNameTextController.text)
-                      .then((value) {
-                        _isChecked.forEach((element) {
-                          memberPlayStatusController.addMemberPlayStatus(
+                      .then((value)  {
+                        _isChecked.asMap().forEach((index, value) async {
+                          if (value) {
+                            await memberPlayStatusController.addMemberPlayStatus(
                               classNameTextController.text,
-                              memberController.listMember[0].memberId,
-                              memberController.listMember[0].name
-                          );
-                          Get.toNamed("/");
+                              memberController.listMember[index].memberId,
+                              memberController.listMember[index].name
+                            );
+                          }
                         });
+
+                        Get.toNamed("/");
                       });
                     }
                 )

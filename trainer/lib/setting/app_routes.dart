@@ -7,10 +7,11 @@ import 'package:trainer/controller/member_controller.dart';
 import 'package:trainer/controller/member_play_status_controller.dart';
 import 'package:trainer/model/class_play_status.dart';
 import 'package:trainer/service/auth_service.dart';
+import 'package:trainer/service/backend/class_service.dart';
 import 'package:trainer/service/backend/gems_service.dart';
 import 'package:trainer/service/backend/member_service.dart';
 import 'package:trainer/service/firestore/class_play_status_service.dart';
-import 'package:trainer/service/firestore/class_service.dart';
+import 'package:trainer/service/firestore/class_service_mock.dart';
 import 'package:trainer/service/firestore/member_play_status_service.dart';
 import 'package:trainer/view/class_detail/class_detail_view.dart';
 import 'package:trainer/view/class_new/class_new_view.dart';
@@ -47,7 +48,7 @@ class AppRoutes {
       page: () => const MainView(),
       binding: BindingsBuilder(() {
         // Get.put(AuthController(authService: injector.get<AuthService>()));
-        Get.put(ClassController(testGroupService: injector.get<ClassService>()));
+        Get.put(ClassController(classService: injector.get<ClassService>()));
         Get.put(ClassPlayStatusController(
           classPlayStatusService: injector.get<ClassPlayStatusService>(),
           authService: injector.get<AuthService>()
@@ -64,7 +65,7 @@ class AppRoutes {
             authService: injector.get<AuthService>()
         ));
         // Get.put(AuthController(authService: injector.get<AuthService>()));
-        Get.put(ClassController(testGroupService: injector.get<ClassService>()));
+        Get.put(ClassController(classService: injector.get<ClassService>()));
         Get.put(MemberController(memberService: injector.get<MemberService>()));
         Get.put(MemberPlayStatusController(memberPlayStatusService: injector.get<MemberPlayStatusService>()));
       }),

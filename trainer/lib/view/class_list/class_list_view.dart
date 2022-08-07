@@ -22,16 +22,16 @@ class ClassListView extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: Column(children: [
           Expanded(
-            child: classController.listTrainerClass.isEmpty
+            child: classController.listClassInfo.isEmpty
               ? const Center(child: CircularProgressIndicator())
               : ListView.builder(
-                  itemCount: classController.listTrainerClass.length,
+                  itemCount: classController.listClassInfo.length,
                   itemBuilder: (context, index) {
 
-                    final trainerClass = classController.listTrainerClass[index];
+                    final classInfo = classController.listClassInfo[index];
 
                     return ClassListItem(
-                      trainerClass: trainerClass
+                      classInfo: classInfo
                     );
                   }
               ),

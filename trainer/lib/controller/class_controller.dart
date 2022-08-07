@@ -1,33 +1,39 @@
 import 'package:get/get.dart';
+import 'package:trainer/model/class_info.dart';
 import 'package:trainer/model/trainer_class.dart';
-import 'package:trainer/service/firestore/class_service.dart';
+import 'package:trainer/service/backend/class_service.dart';
+import 'package:trainer/service/firestore/class_service_mock.dart';
 
 class ClassController extends GetxController {
-  final ClassService testGroupService;
+  final ClassService classService;
 
-  ClassController({required this.testGroupService});
+  ClassController({required this.classService});
 
-  final RxList<TrainerClass> listTrainerClass = RxList<TrainerClass>();
+  final RxList<ClassInfo> listClassInfo = RxList<ClassInfo>();
   final RxBool _isLoadingTestGroup = RxBool(false);
 
   @override
   void onInit() {
-    loadClass();
+    getClassList();
     super.onInit();
   }
 
-  Future<void> loadClass() async {
+  void getClassList() async {
     // _isLoadingTestGroup.value = true;
     // testGroups.value = await testGroupService.listTestGroup("aaa");
     // _isLoadingTestGroup.value = false;
-    listTrainerClass.bindStream(testGroupService.listClassSnapshot("aaa"));
+    classService.getClassList("6").then((value) {
+      listClassInfo.value = value;
+    });
   }
 
-  TrainerClass? getArticle(String id) {
-    final testGroup = listTrainerClass.firstWhereOrNull((element) =>
-    element.docId == id,
-    );
+  ClassInfo? getClass(String classId) {
+    for (var classInfo in listClassInfo.value) {
+      if (classInfo.classId == classId) {
+        return classInfo;
+      }
+    }
 
-    return testGroup;
+    return null;
   }
 }

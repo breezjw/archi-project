@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:logger/logger.dart';
 import 'package:trainer/model/trainer_class.dart';
 
-class ClassService {
+class ClassMockService {
   final logger = Logger();
   CollectionReference classRef = FirebaseFirestore.instance.collection(FireStoreTrainerClass.collection);
 
