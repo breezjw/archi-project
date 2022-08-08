@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:trainer/model/class_info.dart';
+import 'package:trainer/model/member.dart';
 import 'package:trainer/model/trainer_class.dart';
 import 'package:trainer/service/backend/class_service.dart';
 import 'package:trainer/service/firestore/class_service_mock.dart';
@@ -18,11 +19,11 @@ class ClassController extends GetxController {
     super.onInit();
   }
 
-  void getClassList() async {
+  Future<void> getClassList() async {
     // _isLoadingTestGroup.value = true;
     // testGroups.value = await testGroupService.listTestGroup("aaa");
     // _isLoadingTestGroup.value = false;
-    classService.getClassList("6").then((value) {
+    return classService.getClassList("6").then((value) {
       listClassInfo.value = value;
     });
   }
@@ -35,5 +36,13 @@ class ClassController extends GetxController {
     }
 
     return null;
+  }
+
+  Future<List<Member>> getClassMemberList(String classId) async {
+    return classService.getClassMemberList("6", classId);
+  }
+
+  Future<void> addClass(String name, String trainerId) async {
+    return classService.addClass(name: name, trainerId: trainerId);
   }
 }

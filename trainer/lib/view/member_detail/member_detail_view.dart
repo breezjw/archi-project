@@ -68,8 +68,9 @@ class _MemberDetailViewState extends State<MemberDetailView>
             :Column(
               children: [
                 buildTitleText(text:"Member Info"),
-                buildNormalText(text: "Name: ${memberController.getMember(widget.docId)!.name}"),
-                buildNormalText(text: "ID: ${memberController.getMember(widget.docId)!.memberId}"),
+                buildNormalText(text: "Name: ${memberController.getMember(widget.docId)!.name} (ID: ${memberController.getMember(widget.docId)!.memberId})"),
+                buildNormalText(text: "Age: ${memberController.getMember(widget.docId)!.age.toString()}"),
+                buildNormalText(text: "Gender: ${memberController.getMember(widget.docId)!.gender}"),
                 Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
                 buildTitleText(text:"Assigned GEMS"),
                 buildNormalText(text:"None"),

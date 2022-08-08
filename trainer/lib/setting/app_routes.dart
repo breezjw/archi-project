@@ -74,7 +74,8 @@ class AppRoutes {
       name: ClassDetailView.routeName,
       page: () => const ClassDetailView(),
       binding: BindingsBuilder(() {
-       Get.put(MemberPlayStatusController(memberPlayStatusService: injector.get<MemberPlayStatusService>()));
+        Get.put(ClassController(classService: injector.get<ClassService>()));
+        Get.put(MemberPlayStatusController(memberPlayStatusService: injector.get<MemberPlayStatusService>()));
         // Get.put(AuthController(authService: injector.get<AuthService>()));
         // Get.put(ClassController(testGroupService: injector.get<ClassService>()));
       }),

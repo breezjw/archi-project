@@ -43,7 +43,7 @@ class ClassListItem extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(children: [
                   Text(
-                    "Class Name: ${classInfo.name}",
+                    "${classInfo.name} (ID: ${classInfo.classId})",
                     style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20

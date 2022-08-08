@@ -34,33 +34,56 @@ class ClassService {
     return retClasses;
   }
 
-  Future<Member?> getMember(String id) async {
-    Member? retMember;
-    final url = Uri.parse(BACKEND_URL + GET_MEMBER_API + "/" + id);
+  Future<void> addClass ({
+    required String name,
+    required String trainerId
+  }) async {
+    final url = Uri.parse(BACKEND_URL + ADD_TRAINER_CLASS(trainerId));
+    logger.d(url);
+    final body = convert.jsonEncode({
+      "className": name,
+      // "trainerId": int.parse(trainerId)
+    });
 
-    var response = await http.get(url);
+    http.Response response = await http.post(
+      url,
+      headers:  { 'Content-type': 'application/json'},
+      body: body
+    );
+
     if (response.statusCode == 200) {
-
       logger.d(response.body);
-
-      var member = convert.jsonDecode(response.body) as Map<String, dynamic>;
-      retMember = Member(memberId: member["memberId"], name: member["name"]);
-
-      logger.d(retMember);
     } else {
       logger.e('Request failed with status: ${response.statusCode}.');
     }
 
-    return retMember;
+    return;
   }
 
-  Future<List<Member>> getMemberListMock() async {
+  Future<List<Member>> getClassMemberList(String trainerId, String classId) async {
+    List<Member> retMembers = [];
+    final url = Uri.parse(BACKEND_URL + LIST_TRAINER_CLASS_MEMBER_LIST(trainerId, classId));
 
-    List<Member> retMembers= [];
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      logger.d(response.body);
+      var members = convert.jsonDecode(response.body) as List<dynamic>;
+      members.forEach((element) {
+        var member = element as Map<String, dynamic>;
+        retMembers.add(Member(
+          memberId: member[ApiMember.memberId].toString(),
+          name: member[ApiMember.name],
+          email: member[ApiMember.email],
+          age: member[ApiMember.age],
+          nickName: member[ApiMember.nickName],
+          gender: member[ApiMember.gender]),
+        );
+      });
 
-    retMembers.add(Member(memberId: "aaa", name: "AAA"));
-    retMembers.add(Member(memberId: "bbb", name: "BBB"));
-    retMembers.add(Member(memberId: "ccc", name: "CCC"));
+      logger.d(retMembers);
+    } else {
+      logger.e('Request failed with status: ${response.statusCode}.');
+    }
 
     return retMembers;
   }

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:trainer/controller/auth_controller.dart';
+import 'package:trainer/controller/class_controller.dart';
 import 'package:trainer/controller/class_play_status_controller.dart';
 import 'package:trainer/controller/member_controller.dart';
 import 'package:trainer/controller/member_play_status_controller.dart';
+import 'package:trainer/model/class_info.dart';
 import 'package:trainer/view/class_detail/member_list_view.dart';
 import 'package:trainer/view/class_list//class_list_view.dart';
 import 'package:trainer/view/common/common_widgets.dart';
@@ -26,13 +28,16 @@ class _ClassDetailViewState extends State<ClassDetailView>
   final Logger logger = Logger();
 
   final AuthController _authController = AuthController.to;
+  ClassController classController = Get.find<ClassController>();
   ClassPlayStatusController classPlayStatusController = Get.find<ClassPlayStatusController>();
   MemberController memberController = Get.find<MemberController>();
 
   final String classId = Get.arguments;
+  late ClassInfo? classInfo;
 
   @override
   void initState() {
+    classInfo = classController.getClass(classId);
     classPlayStatusController.bindClassPlayStatus(classId);
     memberController.getMemberList();
 
@@ -65,11 +70,12 @@ class _ClassDetailViewState extends State<ClassDetailView>
             : Column(
               children: [
                 buildTitleText(text: "Class Info"),
+                buildNormalText(text: "Name: ${classInfo!.name} (ID: ${classInfo!.classId})"),
                 buildNormalText(text: "Workout Type: Diet Class"),
                 buildNormalText(text: "Workout Play Count: ${classPlayStatusController.classPlayStatus!.playCount.toString()}"),
                 Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
                 buildTitleText(text:"Class Members"),
-                Expanded(child: MemberListView()),
+                Expanded(child: MemberListView(classId: classId,)),
                 buildButton(
                   buttonText: "START WORKOUT",
                   onPressed: () {

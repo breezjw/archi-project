@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:trainer/controller/auth_controller.dart';
+import 'package:trainer/controller/class_controller.dart';
 import 'package:trainer/controller/class_play_status_controller.dart';
 import 'package:trainer/controller/member_controller.dart';
 import 'package:trainer/controller/member_play_status_controller.dart';
@@ -27,6 +28,7 @@ class _ClassNewViewState extends State<ClassNewView>
   final Logger logger = Logger();
 
   final AuthController _authController = AuthController.to;
+  ClassController classController = Get.find<ClassController>();
   MemberController memberController = Get.find<MemberController>();
   ClassPlayStatusController classPlayStatusController = Get.find<ClassPlayStatusController>();
   MemberPlayStatusController memberPlayStatusController = Get.find<MemberPlayStatusController>();
@@ -92,21 +94,30 @@ class _ClassNewViewState extends State<ClassNewView>
                 ),
                 buildButton(
                     buttonText: "ADD CLASS",
-                    onPressed: () {
-                      classPlayStatusController.addClassPlayStatus(classNameTextController.text)
-                      .then((value)  {
-                        _isChecked.asMap().forEach((index, value) async {
-                          if (value) {
-                            await memberPlayStatusController.addMemberPlayStatus(
-                              classNameTextController.text,
-                              memberController.listMember[index].memberId,
-                              memberController.listMember[index].name
-                            );
-                          }
-                        });
+                    onPressed: () async {
+                      await classController.addClass(classNameTextController.text, "6");
+                      await classController.getClassList();
 
-                        Get.toNamed("/");
-                      });
+                      var classId = classController.listClassInfo
+                        .reduce((pre, cur) => int.parse(pre.classId) > int.parse(cur.classId) ? pre : cur);
+
+                      logger.d(classController.listClassInfo.length);
+                      logger.d(classId.classId);
+
+                      // classPlayStatusController.addClassPlayStatus(classNameTextController.text)
+                      // .then((value)  {
+                      //   _isChecked.asMap().forEach((index, value) async {
+                      //     if (value) {
+                      //       await memberPlayStatusController.addMemberPlayStatus(
+                      //         classNameTextController.text,
+                      //         memberController.listMember[index].memberId,
+                      //         memberController.listMember[index].name
+                      //       );
+                      //     }
+                      //   });
+                      //
+                      //   Get.toNamed("/");
+                      // });
                     }
                 )
               ],

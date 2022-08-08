@@ -21,7 +21,14 @@ class MemberService {
       var members = convert.jsonDecode(response.body) as List<dynamic>;
       members.forEach((element) {
         var member = element as Map<String, dynamic>;
-        retMembers.add(Member(memberId: member["memberId"].toString(), name: member["name"]), );
+        retMembers.add(Member(
+            memberId: member[ApiMember.memberId].toString(),
+            name: member[ApiMember.name],
+            email: member[ApiMember.email],
+            age: member[ApiMember.age],
+            nickName: member[ApiMember.nickName],
+            gender: member[ApiMember.gender]),
+        );
       });
 
       logger.d(retMembers);
@@ -42,7 +49,13 @@ class MemberService {
       logger.d(response.body);
 
       var member = convert.jsonDecode(response.body) as Map<String, dynamic>;
-      retMember = Member(memberId: member["memberId"].toString(), name: member["name"]);
+      retMember = Member(
+          memberId: member[ApiMember.memberId].toString(),
+          name: member[ApiMember.name],
+          email: member[ApiMember.email],
+          age: member[ApiMember.age],
+          nickName: member[ApiMember.nickName],
+          gender: member[ApiMember.gender]);
 
       logger.d(retMember);
     } else {
@@ -50,16 +63,5 @@ class MemberService {
     }
 
     return retMember;
-  }
-
-  Future<List<Member>> getMemberListMock() async {
-
-    List<Member> retMembers= [];
-
-    retMembers.add(Member(memberId: "aaa", name: "AAA"));
-    retMembers.add(Member(memberId: "bbb", name: "BBB"));
-    retMembers.add(Member(memberId: "ccc", name: "CCC"));
-
-    return retMembers;
   }
 }
