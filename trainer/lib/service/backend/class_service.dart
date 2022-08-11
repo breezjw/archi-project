@@ -87,4 +87,28 @@ class ClassService {
 
     return retMembers;
   }
+
+  Future<void> addClassMember ({
+    required String trainerId,
+    required String classId,
+    required List<int> memberIds
+  }) async {
+    final url = Uri.parse(BACKEND_URL + ADD_TRAINER_CLASS_MEMBER(trainerId, classId));
+    logger.d(url);
+    final body = convert.jsonEncode(memberIds);
+
+    http.Response response = await http.post(
+        url,
+        headers:  { 'Content-type': 'application/json'},
+        body: body
+    );
+
+    if (response.statusCode == 200) {
+      logger.d(response.body);
+    } else {
+      logger.e('Request failed with status: ${response.statusCode}.');
+    }
+
+    return;
+  }
 }

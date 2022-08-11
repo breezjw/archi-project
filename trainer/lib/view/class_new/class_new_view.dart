@@ -98,26 +98,35 @@ class _ClassNewViewState extends State<ClassNewView>
                       await classController.addClass(classNameTextController.text, "6");
                       await classController.getClassList();
 
-                      var classId = classController.listClassInfo
+                      var classInfo = classController.listClassInfo
                         .reduce((pre, cur) => int.parse(pre.classId) > int.parse(cur.classId) ? pre : cur);
 
-                      logger.d(classController.listClassInfo.length);
-                      logger.d(classId.classId);
+                      List<int> checkedIndex = [];
 
-                      // classPlayStatusController.addClassPlayStatus(classNameTextController.text)
-                      // .then((value)  {
-                      //   _isChecked.asMap().forEach((index, value) async {
-                      //     if (value) {
-                      //       await memberPlayStatusController.addMemberPlayStatus(
-                      //         classNameTextController.text,
-                      //         memberController.listMember[index].memberId,
-                      //         memberController.listMember[index].name
-                      //       );
-                      //     }
-                      //   });
-                      //
-                      //   Get.toNamed("/");
-                      // });
+                      _isChecked.asMap().forEach((index, value) async {
+                         if (value) {
+                           checkedIndex.add(index+1);
+                         }
+                      });
+
+                      logger.d("INDEX: ${checkedIndex}");
+
+                      await classController.addClassMember("6", classInfo.classId, checkedIndex);
+
+                      classPlayStatusController.addClassPlayStatus(classInfo.classId)
+                      .then((value)  {
+                        _isChecked.asMap().forEach((index, value) async {
+                          if (value) {
+                            await memberPlayStatusController.addMemberPlayStatus(
+                              classNameTextController.text,
+                              memberController.listMember[index].memberId,
+                              memberController.listMember[index].name
+                            );
+                          }
+                        });
+
+                        Get.toNamed("/");
+                      });
                     }
                 )
               ],

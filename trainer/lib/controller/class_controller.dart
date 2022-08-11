@@ -38,11 +38,15 @@ class ClassController extends GetxController {
     return null;
   }
 
+  Future<void> addClass(String name, String trainerId) async {
+    return classService.addClass(name: name, trainerId: trainerId);
+  }
+
   Future<List<Member>> getClassMemberList(String classId) async {
     return classService.getClassMemberList("6", classId);
   }
 
-  Future<void> addClass(String name, String trainerId) async {
-    return classService.addClass(name: name, trainerId: trainerId);
+  Future<void> addClassMember(String trainerId, String classId, List<int> memberIds) async {
+    return classService.addClassMember(trainerId: trainerId, classId: classId, memberIds: memberIds);
   }
 }
