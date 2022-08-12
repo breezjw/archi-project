@@ -41,7 +41,7 @@ class ClassService {
     final url = Uri.parse(BACKEND_URL + ADD_TRAINER_CLASS(trainerId));
     logger.d(url);
     final body = convert.jsonEncode({
-      "className": name,
+      "class_name": name,
       // "trainerId": int.parse(trainerId)
     });
 
@@ -66,7 +66,6 @@ class ClassService {
 
     var response = await http.get(url);
     if (response.statusCode == 200) {
-      logger.d(response.body);
       var members = convert.jsonDecode(response.body) as List<dynamic>;
       members.forEach((element) {
         var member = element as Map<String, dynamic>;
@@ -79,8 +78,6 @@ class ClassService {
           gender: member[ApiMember.gender]),
         );
       });
-
-      logger.d(retMembers);
     } else {
       logger.e('Request failed with status: ${response.statusCode}.');
     }
@@ -102,6 +99,23 @@ class ClassService {
         headers:  { 'Content-type': 'application/json'},
         body: body
     );
+
+    if (response.statusCode == 200) {
+      logger.d(response.body);
+    } else {
+      logger.e('Request failed with status: ${response.statusCode}.');
+    }
+
+    return;
+  }
+
+  Future<void> deleteClassMember ({
+    required String trainerId,
+    required String classId,s
+  }) async {
+    final url = Uri.parse(BACKEND_URL + DELETE_TRAINER_CLASS(trainerId, classId));
+
+    http.Response response = await http.delete(url);
 
     if (response.statusCode == 200) {
       logger.d(response.body);

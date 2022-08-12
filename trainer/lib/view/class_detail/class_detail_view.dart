@@ -71,8 +71,8 @@ class _ClassDetailViewState extends State<ClassDetailView>
               children: [
                 buildTitleText(text: "Class Info"),
                 buildNormalText(text: "Name: ${classInfo!.name} (ID: ${classInfo!.classId})"),
-                buildNormalText(text: "Workout Type: Diet Class"),
-                buildNormalText(text: "Workout Play Count: ${classPlayStatusController.classPlayStatus!.playCount.toString()}"),
+                buildNormalText(text: "Exercise Type: Diet Class"),
+                buildNormalText(text: "Exercise Number: ${classPlayStatusController.classPlayStatus!.playCount.toString()}"),
                 Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
                 buildTitleText(text:"Class Members"),
                 Expanded(child: MemberListView(classId: classId,)),
@@ -81,7 +81,7 @@ class _ClassDetailViewState extends State<ClassDetailView>
                   onPressed: () {
                     classPlayStatusController.startClassPlayStatus(classId)
                     .then((value) => Get.toNamed(ClassPlayView.routeName,
-                        arguments: {"classId": classId, "playCount": (classPlayStatusController.classPlayStatus!.playCount+1).toString()}));
+                        arguments: {"classInfo": classInfo, "playCount": (classPlayStatusController.classPlayStatus!.playCount+1).toString()}));
                   }
                 )
               ],

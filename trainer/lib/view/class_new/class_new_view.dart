@@ -72,7 +72,7 @@ class _ClassNewViewState extends State<ClassNewView>
               children: [
                 buildTitleText(text:"Class Info"),
                 buildTextField(label: "Class Name", controller: classNameTextController),
-                buildTextField(label: "Workout Type"),
+                buildTextField(label: "Exercise Type"),
                 Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
                 buildTitleText(text:"Class Member"),
                 Expanded(
@@ -109,7 +109,7 @@ class _ClassNewViewState extends State<ClassNewView>
                          }
                       });
 
-                      logger.d("INDEX: ${checkedIndex}");
+                      logger.d("HEREL: ${classInfo.classId}");
 
                       await classController.addClassMember("6", classInfo.classId, checkedIndex);
 
@@ -118,7 +118,7 @@ class _ClassNewViewState extends State<ClassNewView>
                         _isChecked.asMap().forEach((index, value) async {
                           if (value) {
                             await memberPlayStatusController.addMemberPlayStatus(
-                              classNameTextController.text,
+                              classInfo.classId,
                               memberController.listMember[index].memberId,
                               memberController.listMember[index].name
                             );

@@ -49,4 +49,8 @@ class ClassController extends GetxController {
   Future<void> addClassMember(String trainerId, String classId, List<int> memberIds) async {
     return classService.addClassMember(trainerId: trainerId, classId: classId, memberIds: memberIds);
   }
+
+  Future<void> deleteClassMember(String trainerId, String classId) async {
+    return classService.deleteClassMember(trainerId: trainerId, classId: classId);
+  }
 }

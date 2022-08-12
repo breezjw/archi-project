@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:trainer/controller/class_controller.dart';
 import 'package:trainer/controller/class_play_status_controller.dart';
 import 'package:trainer/model/class_info.dart';
 import 'package:trainer/model/class_play_status.dart';
 import 'package:trainer/model/trainer_class.dart';
 import 'package:trainer/view/class_detail/class_detail_view.dart';
 
-class ClassListItem extends StatelessWidget {
+
+class ClassListItem extends StatefulWidget {
+  static const routeName = '/class_list';
+
   final ClassInfo classInfo;
 
   const ClassListItem({
@@ -16,19 +20,36 @@ class ClassListItem extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _ClassListItemState createState() => _ClassListItemState();
+}
+
+class _ClassListItemState extends State<ClassListItem> {
+
+  ClassController classController = Get.find<ClassController>();
+
+  late var _tapPosition;
+
+
+  @override
   Widget build(BuildContext context) {
     final Logger _logger = Logger();
     ClassPlayStatusController classPlayStatusController = Get.find<ClassPlayStatusController>();
 
-    _logger.d(classInfo.name);
+    _logger.d(widget.classInfo.name);
 
     return Container(
       padding: const EdgeInsets.only(top: 5),
       child: InkWell(
         onTap: () {
           //TODO: Group Detail
-          Get.toNamed(ClassDetailView.routeName, arguments: classInfo.classId);
+          Get.toNamed(ClassDetailView.routeName, arguments: widget.classInfo.classId);
           // Get.to(() => NextPage(), arguments: value);
+        },
+        onTapDown: _storePosition,
+        onLongPress: () {
+          setState(() {
+            _showContextMenu(context);
+          });
         },
         child: Container(
           decoration: BoxDecoration(
@@ -43,21 +64,21 @@ class ClassListItem extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(children: [
                   Text(
-                    "${classInfo.name} (ID: ${classInfo.classId})",
+                    "${widget.classInfo.name} (ID: ${widget.classInfo.classId})",
                     style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20
                     ),
                   ),
                   FutureBuilder(
-                    future: classPlayStatusController.getClassPlayStatusByClassId(classInfo.classId),
+                    future: classPlayStatusController.getClassPlayStatusByClassId(widget.classInfo.classId),
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       if (snapshot.hasData == false) {
                         return CircularProgressIndicator();
                       }
                       else if (snapshot.hasError) {
                         return const Text(
-                          "Play Count: -",
+                          "Exercise Number: -",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 15
@@ -67,7 +88,7 @@ class ClassListItem extends StatelessWidget {
                       else {
                         final ClassPlayStatus classPlayStatus = snapshot.data;
                         return Text(
-                            "Play Count: ${classPlayStatus.playCount}",
+                            "Exercise Number: ${classPlayStatus.playCount} ",
                             style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 15
@@ -83,5 +104,39 @@ class ClassListItem extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _storePosition(TapDownDetails details) {
+    _tapPosition = details.globalPosition;
+  }
+
+  void _showContextMenu(BuildContext context) async {
+    final RenderObject? overlay =
+    Overlay.of(context)?.context.findRenderObject();
+
+    final result = await showMenu(
+        context: context,
+
+        // Show the context menu at the tap location
+        position: RelativeRect.fromRect(
+            Rect.fromLTWH(_tapPosition.dx, _tapPosition.dy, 30, 30),
+            Rect.fromLTWH(0, 0, overlay!.paintBounds.size.width,
+                overlay.paintBounds.size.height)),
+
+        // set a list of choices for the context menu
+        items: [
+          const PopupMenuItem(
+            value: 'delete',
+            child: Text('Delete Class'),
+          ),
+        ]);
+
+    // Implement the logic for each choice here
+    switch (result) {
+      case 'delete':
+        classController.deleteClassMember(widget.classInfo.trainerId, widget.classInfo.classId);
+        classController.getClassList();
+        break;
+    }
   }
 }

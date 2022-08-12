@@ -4,6 +4,7 @@ import 'package:logger/logger.dart';
 import 'package:trainer/controller/auth_controller.dart';
 import 'package:trainer/controller/class_play_status_controller.dart';
 import 'package:trainer/controller/member_play_status_controller.dart';
+import 'package:trainer/model/class_info.dart';
 import 'package:trainer/view/class_list/class_list_view.dart';
 import 'package:trainer/view/class_detail/class_detail_view.dart';
 import 'package:trainer/view/class_play/member_play_status_list_view.dart';
@@ -27,7 +28,7 @@ class _ClassPlayViewState extends State<ClassPlayView>
   ClassPlayStatusController classPlayStatusController = Get.find<ClassPlayStatusController>();
   MemberPlayStatusController memberPlayStatusController = Get.find<MemberPlayStatusController>();
 
-  final String classId = Get.arguments["classId"];
+  final ClassInfo classInfo = Get.arguments["classInfo"];
   final int playCount = int.parse(Get.arguments["playCount"]);
 
   int classWorkoutSpeed = 5;
@@ -36,9 +37,9 @@ class _ClassPlayViewState extends State<ClassPlayView>
 
   @override
   void initState() {
-    logger.d(classId);
-    classPlayStatusController.bindClassPlayStatus(classId);
-    memberPlayStatusController.loadListMemberPlayStatus(classId, playCount);
+    logger.d(classInfo);
+    classPlayStatusController.bindClassPlayStatus(classInfo.classId);
+    memberPlayStatusController.loadListMemberPlayStatus(classInfo.classId, playCount);
 
     super.initState();
   }
@@ -71,12 +72,12 @@ class _ClassPlayViewState extends State<ClassPlayView>
             ? const Center(child: CircularProgressIndicator())
             : Column(
               children: [
-                buildTitleText(text:"Class #$playCount"),
-                buildNormalText(text: "Workout Type: Diet Class"),
+                buildTitleText(text:"\"${classInfo.name}\" Class #$playCount"),
+                buildNormalText(text: "Exercise Type: Diet Class"),
                 Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
                 buildTitleText(text:"Class GEMS Control"),
                 buildDropdownButton(
-                  label: "Workout Speed",
+                  label: "Exercise Speed",
                   initialValue: classWorkoutSpeed.toString(),
                   callback: (value) {
                     setState(() {
@@ -85,7 +86,7 @@ class _ClassPlayViewState extends State<ClassPlayView>
                     });
                 }),
                 buildDropdownButton(
-                  label: "Workout Strength",
+                  label: "Exercise Strength",
                   initialValue: classWorkoutStrength.toString(),
                   callback: (value) {
                     setState(() {
@@ -94,7 +95,7 @@ class _ClassPlayViewState extends State<ClassPlayView>
                     });
                 }),
                 buildDropdownButton(
-                  label: "Workout Count",
+                  label: "Exercise Count",
                   range: 20,
                   initialValue: classWorkoutCount.toString(),
                   callback: (value) {
@@ -144,8 +145,8 @@ class _ClassPlayViewState extends State<ClassPlayView>
                   buttonText: "STOP WORKOUT",
                   onPressed: () {
                     // Get.toNamed(ClassPlayView.routeName, arguments: "test");
-                    classPlayStatusController.stopClassPlayStatus(classId)
-                    .then((value) => Get.toNamed(ClassDetailView.routeName, arguments: classId));
+                    classPlayStatusController.stopClassPlayStatus(classInfo.classId)
+                    .then((value) => Get.toNamed(ClassDetailView.routeName, arguments: classInfo));
                   },
                   backgroundColor: Colors.red
                 )

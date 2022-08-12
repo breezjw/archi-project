@@ -74,7 +74,7 @@ class _MemberPlayStatusViewState extends State<MemberPlayStatusView>
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
                   child: Text(
-                    "Workout Status: ${memberPlayStatusController.memberPlayStatus!.workoutStatus.toUpperCase()}",
+                    "Exercise Status: ${memberPlayStatusController.memberPlayStatus!.workoutStatus.toUpperCase()}",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 17,
