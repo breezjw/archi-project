@@ -1,18 +1,16 @@
-import 'package:trainer/service/auth_service.dart';
-import 'package:trainer/service/backend/class_service.dart';
-import 'package:trainer/service/backend/gems_service.dart';
-import 'package:trainer/service/backend/member_service.dart';
-import 'package:trainer/service/firestore/class_play_status_service.dart';
-import 'package:trainer/service/firestore/class_service_mock.dart';
-import 'package:trainer/service/firestore/member_play_status_service.dart';
+import 'package:trainer/authentication_manager/auth_service.dart';
+import 'package:trainer/data_manager/repository/class_backend_repository.dart';
+import 'package:trainer/data_manager/repository/gems_backend_repository.dart';
+import 'package:trainer/data_manager/repository/member_backend_repository.dart';
+import 'package:trainer/realtime_data_agent/class_exercise_data_agent.dart';
+import 'package:trainer/realtime_data_agent/member_class_exercise_data_agent.dart';
 import 'dependency_injector.dart';
 
 Future<void> setupDependencies() async {
   injector.registerSingleton<AuthService>(AuthService());
-  injector.registerSingleton<ClassService>(ClassService());
-  injector.registerSingleton<ClassMockService>(ClassMockService());
-  injector.registerSingleton<MemberService>(MemberService());
-  injector.registerSingleton<GemsService>(GemsService());
-  injector.registerSingleton<ClassPlayStatusService>(ClassPlayStatusService());
-  injector.registerSingleton<MemberPlayStatusService>(MemberPlayStatusService());
+  injector.registerSingleton<ClassBackendRepository>(ClassBackendRepository());
+  injector.registerSingleton<MemberBackendRepository>(MemberBackendRepository());
+  injector.registerSingleton<GemsBackendRepository>(GemsBackendRepository());
+  injector.registerSingleton<ClassExerciseDataAgent>(ClassExerciseDataAgent());
+  injector.registerSingleton<MemberClassExerciseDataAgent>(MemberClassExerciseDataAgent());
 }

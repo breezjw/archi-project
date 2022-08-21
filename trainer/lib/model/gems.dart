@@ -2,11 +2,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Gems {
-  final String id;
+  final String gemsId;
   final String name;
 
   Gems({
-    required this.id,
+    required this.gemsId,
     required this.name,
   });
 

@@ -1,27 +1,24 @@
 import 'package:get/get.dart';
-import 'package:trainer/controller/auth_controller.dart';
-import 'package:trainer/controller/class_controller.dart';
-import 'package:trainer/controller/class_play_status_controller.dart';
-import 'package:trainer/controller/gems_controller.dart';
-import 'package:trainer/controller/member_controller.dart';
-import 'package:trainer/controller/member_play_status_controller.dart';
-import 'package:trainer/model/class_play_status.dart';
-import 'package:trainer/service/auth_service.dart';
-import 'package:trainer/service/backend/class_service.dart';
-import 'package:trainer/service/backend/gems_service.dart';
-import 'package:trainer/service/backend/member_service.dart';
-import 'package:trainer/service/firestore/class_play_status_service.dart';
-import 'package:trainer/service/firestore/class_service_mock.dart';
-import 'package:trainer/service/firestore/member_play_status_service.dart';
-import 'package:trainer/view/class_detail/class_detail_view.dart';
-import 'package:trainer/view/class_new/class_new_view.dart';
-import 'package:trainer/view/class_play/class_play_view.dart';
-import 'package:trainer/view/class_play/member_play_status_list_view.dart';
-import 'package:trainer/view/login_view.dart';
-import 'package:trainer/view/main_view.dart';
-import 'package:trainer/view/member_detail/member_detail_view.dart';
-import 'package:trainer/view/memeber_play_status/member_play_status_view.dart';
-import 'package:trainer/view/splash_view.dart';
+import 'package:trainer/authentication_manager/auth_controller.dart';
+import 'package:trainer/data_manager/class_data_manager.dart';
+import 'package:trainer/data_manager/gems_data_manager.dart';
+import 'package:trainer/data_manager/member_data_manager.dart';
+import 'package:trainer/data_manager/repository/member_backend_repository.dart';
+import 'package:trainer/exercise_controller/class_exercise_controller.dart';
+import 'package:trainer/authentication_manager/auth_service.dart';
+import 'package:trainer/exercise_controller/member_class_exercise_controller.dart';
+import 'package:trainer/data_manager/repository/class_backend_repository.dart';
+import 'package:trainer/data_manager/repository/gems_backend_repository.dart';
+import 'package:trainer/realtime_data_agent/class_exercise_data_agent.dart';
+import 'package:trainer/realtime_data_agent/member_class_exercise_data_agent.dart';
+import 'package:trainer/ui/class_detail/class_detail_view.dart';
+import 'package:trainer/ui/class_new/class_new_view.dart';
+import 'package:trainer/ui/class_play/class_play_view.dart';
+import 'package:trainer/ui/login_view.dart';
+import 'package:trainer/ui/main_view.dart';
+import 'package:trainer/ui/member_detail/member_detail_view.dart';
+import 'package:trainer/ui/memeber_play_status/member_play_status_view.dart';
+import 'package:trainer/ui/splash_view.dart';
 import 'dependency_injector.dart';
 
 class AppRoutes {
@@ -48,34 +45,34 @@ class AppRoutes {
       page: () => const MainView(),
       binding: BindingsBuilder(() {
         // Get.put(AuthController(authService: injector.get<AuthService>()));
-        Get.put(ClassController(classService: injector.get<ClassService>()));
-        Get.put(ClassPlayStatusController(
-          classPlayStatusService: injector.get<ClassPlayStatusService>(),
+        Get.put(ClassDataManager(classService: injector.get<ClassBackendRepository>()));
+        Get.put(ClassExerciseController(
+          classPlayStatusService: injector.get<ClassExerciseDataAgent>(),
           authService: injector.get<AuthService>()
         ));
-        Get.put(MemberController(memberService: injector.get<MemberService>()));
+        Get.put(MemberDataManager(memberBackendRepository: injector.get<MemberBackendRepository>()));
       }),
     ),
     GetPage(
       name: ClassNewView.routeName,
       page: () => const ClassNewView(),
       binding: BindingsBuilder(() {
-        Get.put(ClassPlayStatusController(
-            classPlayStatusService: injector.get<ClassPlayStatusService>(),
+        Get.put(ClassExerciseController(
+            classPlayStatusService: injector.get<ClassExerciseDataAgent>(),
             authService: injector.get<AuthService>()
         ));
         // Get.put(AuthController(authService: injector.get<AuthService>()));
-        Get.put(ClassController(classService: injector.get<ClassService>()));
-        Get.put(MemberController(memberService: injector.get<MemberService>()));
-        Get.put(MemberPlayStatusController(memberPlayStatusService: injector.get<MemberPlayStatusService>()));
+        Get.put(ClassDataManager(classService: injector.get<ClassBackendRepository>()));
+        Get.put(MemberDataManager(memberBackendRepository: injector.get<MemberBackendRepository>()));
+        Get.put(MemberClassExerciseController(memberPlayStatusService: injector.get<MemberClassExerciseDataAgent>()));
       }),
     ),
     GetPage(
       name: ClassDetailView.routeName,
       page: () => const ClassDetailView(),
       binding: BindingsBuilder(() {
-        Get.put(ClassController(classService: injector.get<ClassService>()));
-        Get.put(MemberPlayStatusController(memberPlayStatusService: injector.get<MemberPlayStatusService>()));
+        Get.put(ClassDataManager(classService: injector.get<ClassBackendRepository>()));
+        Get.put(MemberClassExerciseController(memberPlayStatusService: injector.get<MemberClassExerciseDataAgent>()));
         // Get.put(AuthController(authService: injector.get<AuthService>()));
         // Get.put(ClassController(testGroupService: injector.get<ClassService>()));
       }),
@@ -84,12 +81,12 @@ class AppRoutes {
       name: MemberDetailView.routeName,
       page: () => MemberDetailView(),
       binding: BindingsBuilder(() {
-        Get.put(ClassPlayStatusController(
-            classPlayStatusService: injector.get<ClassPlayStatusService>(),
+        Get.put(ClassExerciseController(
+            classPlayStatusService: injector.get<ClassExerciseDataAgent>(),
             authService: injector.get<AuthService>()
         ));
-        Get.put(GemsController(gemsService: injector.get<GemsService>()));
-        Get.put(MemberPlayStatusController(memberPlayStatusService: injector.get<MemberPlayStatusService>()));
+        Get.put(GemsDataManager(gemsService: injector.get<GemsBackendRepository>()));
+        Get.put(MemberClassExerciseController(memberPlayStatusService: injector.get<MemberClassExerciseDataAgent>()));
         // Get.put(AuthController(authService: injector.get<AuthService>()));
         // Get.put(ClassController(testGroupService: injector.get<ClassService>()));
       }),
@@ -99,11 +96,11 @@ class AppRoutes {
       page: () => const ClassPlayView(),
       binding: BindingsBuilder(() {
         // Get.put(AuthController(authService: injector.get<AuthService>()));
-        Get.put(ClassPlayStatusController(
-            classPlayStatusService: injector.get<ClassPlayStatusService>(),
+        Get.put(ClassExerciseController(
+            classPlayStatusService: injector.get<ClassExerciseDataAgent>(),
             authService: injector.get<AuthService>()
         ));
-        Get.put(MemberPlayStatusController(memberPlayStatusService: injector.get<MemberPlayStatusService>()));
+        Get.put(MemberClassExerciseController(memberPlayStatusService: injector.get<MemberClassExerciseDataAgent>()));
       }),
     ),
     GetPage(
@@ -111,7 +108,7 @@ class AppRoutes {
       page: () => MemberPlayStatusView(),
       binding: BindingsBuilder(() {
         // Get.put(AuthController(authService: injector.get<AuthService>()));
-        Get.put(MemberPlayStatusController(memberPlayStatusService: injector.get<MemberPlayStatusService>()));
+        Get.put(MemberClassExerciseController(memberPlayStatusService: injector.get<MemberClassExerciseDataAgent>()));
       }),
     ),
   ];
