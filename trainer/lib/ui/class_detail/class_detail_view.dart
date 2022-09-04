@@ -30,13 +30,13 @@ class _ClassDetailViewState extends State<ClassDetailView>
   ClassExerciseController classPlayStatusController = Get.find<ClassExerciseController>();
   MemberDataManager memberController = Get.find<MemberDataManager>();
 
-  final String classId = Get.arguments;
-  late ClassInfo? classInfo;
+  final ClassInfo classInfo = Get.arguments;
+  // late ClassInfo? classInfo;
 
   @override
   void initState() {
-    classInfo = classController.getClass(classId);
-    classPlayStatusController.bindClassExercise(classId);
+    // classInfo = classController.getClass(classId);
+    classPlayStatusController.bindClassExercise(classInfo.classId);
     memberController.getMemberList();
 
     super.initState();
@@ -73,11 +73,11 @@ class _ClassDetailViewState extends State<ClassDetailView>
                 buildNormalText(text: "Exercise Number: ${classPlayStatusController.classPlayStatus!.exerciseCount.toString()}"),
                 Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
                 buildTitleText(text:"Class Members"),
-                Expanded(child: MemberListView(classId: classId,)),
+                Expanded(child: MemberListView(classId: classInfo.classId)),
                 buildButton(
                   buttonText: "START WORKOUT",
                   onPressed: () {
-                    classPlayStatusController.startClassExercise(classId)
+                    classPlayStatusController.startClassExercise(classInfo.classId)
                     .then((value) => Get.toNamed(ClassPlayView.routeName,
                         arguments: {"classInfo": classInfo, "playCount": (classPlayStatusController.classPlayStatus!.exerciseCount+1).toString()}));
                   }

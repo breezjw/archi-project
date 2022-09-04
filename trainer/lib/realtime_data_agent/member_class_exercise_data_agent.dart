@@ -10,6 +10,7 @@ class MemberClassExerciseDataAgent {
     FirebaseFirestore.instance.collection(FireStoreMemberPlayStatus.collection);
 
   Stream<List<MemberClassExercise>> listMemberClassExerciseStream(String classId, int exerciseCount) {
+    _logger.d("listMemberClassExerciseStream");
     return memberPlayStatusRef.where(FireStoreMemberPlayStatus.classId, isEqualTo: classId)
     .where(FireStoreMemberPlayStatus.playCount, isEqualTo: exerciseCount)
     .snapshots()

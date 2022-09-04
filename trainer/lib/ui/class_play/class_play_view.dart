@@ -37,8 +37,6 @@ class _ClassPlayViewState extends State<ClassPlayView>
   @override
   void initState() {
     logger.d(classInfo);
-    classPlayStatusController.bindClassExercise(classInfo.classId);
-    memberPlayStatusController.getListMemberClassExercise(classInfo.classId, playCount);
 
     super.initState();
   }
@@ -47,6 +45,8 @@ class _ClassPlayViewState extends State<ClassPlayView>
   Widget build(BuildContext context) {
 
     // ClassController classController = Get.find<ClassController>();
+    classPlayStatusController.bindClassExercise(classInfo.classId);
+    memberPlayStatusController.getListMemberClassExercise(classInfo.classId, playCount);
 
     return Scaffold(
       appBar: AppBar(

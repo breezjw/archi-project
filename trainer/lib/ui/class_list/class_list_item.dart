@@ -41,7 +41,7 @@ class _ClassListItemState extends State<ClassListItem> {
       child: InkWell(
         onTap: () {
           //TODO: Group Detail
-          Get.toNamed(ClassDetailView.routeName, arguments: widget.classInfo.classId);
+          Get.toNamed(ClassDetailView.routeName, arguments: widget.classInfo);
           // Get.to(() => NextPage(), arguments: value);
         },
         onTapDown: _storePosition,

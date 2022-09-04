@@ -17,8 +17,14 @@ class MemberPlayStatusListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final Logger _logger = Logger();
 
-    _logger.d(memberPlayStatus.name);
-    _logger.d(memberPlayStatus.strength.length);
+    // orderMap(memberPlayStatus.strength);
+    // _logger.d(memberPlayStatus.name);
+    // _logger.d("${memberPlayStatus.strength.length}, ${memberPlayStatus.strength.keys.last}, ${memberPlayStatus.strength.values.last}");
+    // _logger.d("${memberPlayStatus.strength[(memberPlayStatus.strength.length-1)]}");
+
+    var lastCount = memberPlayStatus.count[(memberPlayStatus.count.length-1)];
+    var lastSpeed = memberPlayStatus.speed[(memberPlayStatus.speed.length-1)];
+    var lastStrength = memberPlayStatus.strength[(memberPlayStatus.strength.length-1)];
 
     return Container(
       padding: const EdgeInsets.only(top: 5),
@@ -39,35 +45,44 @@ class MemberPlayStatusListItem extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Column(children: [
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                   Text(
-                    "Name: ${memberPlayStatus.name}",
+                    "${memberPlayStatus.name}: ${memberPlayStatus.exerciseStatus.toUpperCase()}",
                     style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20
                     ),
                   ),
-                  Text(
-                    "status: ${memberPlayStatus.exerciseStatus.toUpperCase()}",
-                    style: const TextStyle(
-                        fontSize: 17
-                    ),
-                  ),
-                  Text(
-                    "speed: ${
-                      memberPlayStatus.speed.isEmpty ? 0: memberPlayStatus.speed.values.last
-                    }",
-                    style: const TextStyle(
-                        fontSize: 17
-                    ),
-                  ),
-                  Text(
-                    "strength: ${
-                        memberPlayStatus.strength.isEmpty ? 0: memberPlayStatus.strength.values.last
-                    }",
-                    style: const TextStyle(
-                        fontSize: 17
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        "count: ${
+                            memberPlayStatus.count.isEmpty ? 0: lastCount
+                        }",
+                        style: const TextStyle(
+                            fontSize: 17
+                        ),
+                      ),
+                      Text(
+                        "speed: ${
+                            memberPlayStatus.speed.isEmpty ? 0: lastSpeed
+                        }",
+                        style: const TextStyle(
+                            fontSize: 17
+                        ),
+                      ),
+                      Text(
+                        "strength: ${
+                            memberPlayStatus.strength.isEmpty ? 0: lastStrength
+                        }",
+                        style: const TextStyle(
+                            fontSize: 17
+                        ),
+                      ),
+                    ],
                   ),
                 ]),
               ),
@@ -77,4 +92,9 @@ class MemberPlayStatusListItem extends StatelessWidget {
       ),
     );
   }
+
+  void orderMap(Map<int, int> map) {
+    return map.entries.toList().sort((a, b) => a.key.compareTo(b.key));
+  }
+
 }

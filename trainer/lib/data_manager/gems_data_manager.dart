@@ -29,4 +29,4 @@ class GemsDataManager extends GetxController {
     });
 
   }
-}C
+}
