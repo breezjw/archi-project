@@ -11,7 +11,7 @@ class ClassBackendRepository {
 
   Future<List<ClassInfo>> getClassList(String trainerId) async {
     List<ClassInfo> retClasses = [];
-    final url = Uri.parse(BACKEND_URL + LIST_TRAINER_CLASS_LIST(trainerId));
+    final url = Uri.parse(BACKEND_URL + LIST_TRAINER_CLASS(trainerId));
 
     var response = await http.get(url);
     if (response.statusCode == 200) {
@@ -62,7 +62,7 @@ class ClassBackendRepository {
 
   Future<List<Member>> getClassMemberList(String trainerId, String classId) async {
     List<Member> retMembers = [];
-    final url = Uri.parse(BACKEND_URL + LIST_TRAINER_CLASS_MEMBER_LIST(trainerId, classId));
+    final url = Uri.parse(BACKEND_URL + LIST_TRAINER_CLASS_MEMBER(trainerId, classId));
 
     var response = await http.get(url);
     if (response.statusCode == 200) {

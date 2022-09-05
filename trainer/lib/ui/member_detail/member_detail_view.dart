@@ -12,7 +12,7 @@ import 'package:trainer/ui/common/common_widgets.dart';
 class MemberDetailView extends StatefulWidget {
   static const routeName = '/member_detail';
 
-  final String docId = Get.arguments;
+  final String memberId = Get.arguments;
 
   MemberDetailView({Key? key}) : super(key: key);
 
@@ -64,9 +64,9 @@ class _MemberDetailViewState extends State<MemberDetailView>
             :Column(
               children: [
                 buildTitleText(text:"Member Info"),
-                buildNormalText(text: "Name: ${memberController.getMember(widget.docId)!.name} (ID: ${memberController.getMember(widget.docId)!.memberId})"),
-                buildNormalText(text: "Age: ${memberController.getMember(widget.docId)!.age.toString()}"),
-                buildNormalText(text: "Gender: ${memberController.getMember(widget.docId)!.gender}"),
+                buildNormalText(text: "Name: ${memberController.getMember(widget.memberId)!.name} (ID: ${memberController.getMember(widget.memberId)!.memberId})"),
+                buildNormalText(text: "Age: ${memberController.getMember(widget.memberId)!.age.toString()}"),
+                buildNormalText(text: "Gender: ${memberController.getMember(widget.memberId)!.gender}"),
                 Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
                 buildTitleText(text:"Assigned GEMS"),
                 buildNormalText(text:"None"),
@@ -94,6 +94,12 @@ class _MemberDetailViewState extends State<MemberDetailView>
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
+                      logger.d("Assign GEMS: ${gemsController.listGems[checkedGems].gemsId}");
+                      setState(() async {
+                        await gemsController.assignGems("6", widget.memberId, gemsController.listGems[checkedGems].gemsId);
+                        await gemsController.getGemsList("6");
+                        checkedGems = -1;
+                      });
                     },
                     style: ElevatedButton.styleFrom(
                       primary: Colors.white,//change background color of button

@@ -19,14 +19,22 @@ class GemsDataManager extends GetxController {
 
   @override
   void onInit() {
-    getGemsList();
+    getGemsList("6");
     super.onInit();
   }
 
-   void getGemsList() async {
-    gemsService.getGemsListMock().then((value) {
+  Future<void> getGemsList(String trainerId) async {
+    return gemsService.getGemsList(trainerId).then((value) {
       listGems.value = value;
     });
-
   }
+
+  Future<void> assignGems(String trainerId, String memberId, String gemsId) async {
+    return gemsService.assignGems(trainerId: trainerId, memberId: memberId, gemsId: gemsId);
+  }
+
+  Future<void> unassignGems(String trainerId, String gemsId) async {
+    return gemsService.unassignGems(trainerId: trainerId, gemsId: gemsId);
+  }
+
 }
