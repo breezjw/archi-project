@@ -20,8 +20,8 @@ class MemberDataManager extends GetxController {
     super.onInit();
   }
 
-  void getMemberList() async {
-    memberBackendRepository.getMemberList().then((value) {
+  Future<void> getMemberList() async {
+    return memberBackendRepository.getMemberList().then((value) {
       listMember.value = value;
     });
   }

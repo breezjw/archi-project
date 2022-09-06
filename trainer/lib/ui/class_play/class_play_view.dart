@@ -145,7 +145,7 @@ class _ClassPlayViewState extends State<ClassPlayView>
                   onPressed: () {
                     // Get.toNamed(ClassPlayView.routeName, arguments: "test");
                     classPlayStatusController.stopClassExercise(classInfo.classId)
-                    .then((value) => Get.toNamed(ClassDetailView.routeName, arguments: classInfo));
+                    .then((value) => Get.offNamed(ClassDetailView.routeName, arguments: classInfo));
                   },
                   backgroundColor: Colors.red
                 )

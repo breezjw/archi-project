@@ -69,14 +69,16 @@ class ClassBackendRepository {
       var members = convert.jsonDecode(response.body) as List<dynamic>;
       members.forEach((element) {
         var member = element as Map<String, dynamic>;
+
         retMembers.add(Member(
           memberId: member[ApiMember.memberId].toString(),
           name: member[ApiMember.name],
           email: member[ApiMember.email],
           age: member[ApiMember.age],
           nickName: member[ApiMember.nickName],
-          gender: member[ApiMember.gender]),
-        );
+          gender: member[ApiMember.gender],
+          gemsId: member[ApiMember.gemsId].toString()
+        ),);
       });
     } else {
       logger.e('Request failed with status: ${response.statusCode}.');

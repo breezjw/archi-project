@@ -8,6 +8,7 @@ class Member {
   final int age;
   final String nickName;
   final String gender;
+  final String gemsId;
 
   Member({
     required this.memberId,
@@ -16,6 +17,7 @@ class Member {
     this.age = 0,
     this.nickName = "",
     this.gender = "",
+    this.gemsId = "",
   });
 }
 
@@ -26,4 +28,5 @@ class ApiMember {
   static const String age = "age";
   static const String nickName = "nickName";
   static const String gender= "gender";
+  static const String gemsId= "gemsId";
 }

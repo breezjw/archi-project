@@ -76,7 +76,7 @@ class MemberClassExercise {
       controlStrength: snap.get(FireStoreMemberPlayStatus.controlStrength),
       speed: convertMap(snap.get(FireStoreMemberPlayStatus.speed)),
       count: convertMap(snap.get(FireStoreMemberPlayStatus.count)),
-      strength: convertMap(snap.get(FireStoreMemberPlayStatus.count)),
+      strength: convertMap(snap.get(FireStoreMemberPlayStatus.strength)),
       exerciseStatus: snap.get(FireStoreMemberPlayStatus.workoutStatus),
     );
   }

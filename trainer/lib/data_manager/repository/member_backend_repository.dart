@@ -27,7 +27,8 @@ class MemberBackendRepository {
             email: member[ApiMember.email],
             age: member[ApiMember.age],
             nickName: member[ApiMember.nickName],
-            gender: member[ApiMember.gender]),
+            gender: member[ApiMember.gender],
+            gemsId: member[ApiMember.gemsId].toString())
         );
       });
 
@@ -46,8 +47,6 @@ class MemberBackendRepository {
     var response = await http.get(url);
     if (response.statusCode == 200) {
 
-      logger.d(response.body);
-
       var member = convert.jsonDecode(response.body) as Map<String, dynamic>;
       retMember = Member(
           memberId: member[ApiMember.memberId].toString(),
@@ -55,9 +54,9 @@ class MemberBackendRepository {
           email: member[ApiMember.email],
           age: member[ApiMember.age],
           nickName: member[ApiMember.nickName],
-          gender: member[ApiMember.gender]);
+          gender: member[ApiMember.gender],
+          gemsId: member[ApiMember.gemsId].toString());
 
-      logger.d(retMember);
     } else {
       logger.e('Request failed with status: ${response.statusCode}.');
     }

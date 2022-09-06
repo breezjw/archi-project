@@ -78,7 +78,7 @@ class _ClassDetailViewState extends State<ClassDetailView>
                   buttonText: "START WORKOUT",
                   onPressed: () {
                     classPlayStatusController.startClassExercise(classInfo.classId)
-                    .then((value) => Get.toNamed(ClassPlayView.routeName,
+                    .then((value) => Get.offNamed(ClassPlayView.routeName,
                         arguments: {"classInfo": classInfo, "playCount": (classPlayStatusController.classPlayStatus!.exerciseCount+1).toString()}));
                   }
                 )
