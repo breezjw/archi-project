@@ -27,10 +27,6 @@ class _MemberPlayStatusViewState extends State<MemberPlayStatusView>
   final AuthController _authController = AuthController.to;
   MemberClassExerciseController memberPlayStatusController = Get.find<MemberClassExerciseController>();
 
-  int memberWorkoutSpeed = 5;
-  int memberWorkoutStrength = 5;
-  int memberWorkoutCount = 10;
-
   @override
   void initState() {
     memberPlayStatusController.getMemberClassExercise(widget.docId);
@@ -60,23 +56,33 @@ class _MemberPlayStatusViewState extends State<MemberPlayStatusView>
           ],
         ),
       ),
-      body: Obx(() => Container(
+      body: Obx(() {
+        var memberPlayStatus = memberPlayStatusController.memberPlayStatus;
+        var lastCount = memberPlayStatus!.count[(memberPlayStatus!.count.length-1)];
+        var lastSpeed = memberPlayStatus.speed[(memberPlayStatus.speed.length-1)];
+        var lastStrength = memberPlayStatus.strength[(memberPlayStatus.strength.length-1)];
+
+        int memberWorkoutSpeed = memberPlayStatus.controlSpeed;
+        int memberWorkoutStrength = memberPlayStatus.controlStrength;
+        int memberWorkoutCount = memberPlayStatus.controlCount;
+
+        return Container(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: memberPlayStatusController.memberPlayStatus == null
             ? const Center(child: CircularProgressIndicator())
             :Column(
               children: [
                 buildTitleText(text:"Member Info"),
-                buildNormalText(text: "Name: ${memberPlayStatusController.memberPlayStatus!.name}"),
+                buildNormalText(text: "Name: ${memberPlayStatus!.name}"),
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
                   child: Text(
-                    "Exercise Status: ${memberPlayStatusController.memberPlayStatus!.exerciseStatus.toUpperCase()}",
+                    "Exercise Status: ${memberPlayStatus!.exerciseStatus.toUpperCase()}",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 17,
-                      color: workoutStatusColor[memberPlayStatusController.memberPlayStatus!.exerciseStatus],
+                      color: workoutStatusColor[memberPlayStatus!.exerciseStatus],
                     ),
                     textAlign: TextAlign.left,
                   ),
@@ -84,16 +90,16 @@ class _MemberPlayStatusViewState extends State<MemberPlayStatusView>
                 Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
                 buildTitleText(text:"Member GEMS Info"),
                 buildNormalText(text: "Speed: ${
-                  memberPlayStatusController.memberPlayStatus!.speed.isEmpty ?
-                    0 : memberPlayStatusController.memberPlayStatus!.speed.values.last
+                  memberPlayStatus!.speed.isEmpty ?
+                    0 : lastSpeed
                 }"),
                 buildNormalText(text: "Strength: ${
-                  memberPlayStatusController.memberPlayStatus!.strength.isEmpty ?
-                    0 : memberPlayStatusController.memberPlayStatus!.strength.values.last
+                  memberPlayStatus!.strength.isEmpty ?
+                    0 : lastStrength
                 }"),
                 buildNormalText(text: "Count: ${
-                  memberPlayStatusController.memberPlayStatus!.count.isEmpty ?
-                    0 : memberPlayStatusController.memberPlayStatus!.count.values.last
+                  memberPlayStatus!.count.isEmpty ?
+                    0 : lastCount
                 }"),
                 Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
                 buildTitleText(text:"Member GEMS Control"),
@@ -158,7 +164,7 @@ class _MemberPlayStatusViewState extends State<MemberPlayStatusView>
                 ),
             ],
           )
-        )
+        );}
       ),
       // bottomSheet: Container(
       //   width: MediaQuery.of(context).size.width,

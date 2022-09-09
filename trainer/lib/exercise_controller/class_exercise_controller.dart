@@ -74,7 +74,7 @@ class ClassExerciseController extends GetxController {
           status: "stop",
           startDate: DateTime.now(),
           endDate: DateTime.now(),
-          playCount: doc.exerciseCount + 1
+          playCount: doc.exerciseCount
       );
     });
 
