@@ -27,9 +27,19 @@ class _MemberPlayStatusViewState extends State<MemberPlayStatusView>
   final AuthController _authController = AuthController.to;
   MemberClassExerciseController memberPlayStatusController = Get.find<MemberClassExerciseController>();
 
+  int memberWorkoutSpeed = 0;
+  int memberWorkoutStrength = 0;
+  int memberWorkoutCount = 0;
+
   @override
   void initState() {
-    memberPlayStatusController.getMemberClassExercise(widget.docId);
+    memberPlayStatusController.getMemberClassExercise(widget.docId).then((value) {
+      setState(() {
+        memberWorkoutSpeed = memberPlayStatusController.memberPlayStatus!.controlSpeed;
+        memberWorkoutStrength = memberPlayStatusController.memberPlayStatus!.controlStrength;
+        memberWorkoutCount = memberPlayStatusController.memberPlayStatus!.controlCount;
+      });
+    });
     super.initState();
   }
 
@@ -37,7 +47,6 @@ class _MemberPlayStatusViewState extends State<MemberPlayStatusView>
   Widget build(BuildContext context) {
 
     // ClassController classController = Get.find<ClassController>();
-
 
     return Scaffold(
       appBar: AppBar(
@@ -62,10 +71,6 @@ class _MemberPlayStatusViewState extends State<MemberPlayStatusView>
         var lastSpeed = memberPlayStatus.speed[(memberPlayStatus.speed.length-1)];
         var lastStrength = memberPlayStatus.strength[(memberPlayStatus.strength.length-1)];
 
-        int memberWorkoutSpeed = memberPlayStatus.controlSpeed;
-        int memberWorkoutStrength = memberPlayStatus.controlStrength;
-        int memberWorkoutCount = memberPlayStatus.controlCount;
-
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: memberPlayStatusController.memberPlayStatus == null
@@ -89,27 +94,28 @@ class _MemberPlayStatusViewState extends State<MemberPlayStatusView>
                 ),
                 Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
                 buildTitleText(text:"Member GEMS Info"),
+                buildNormalText(text: "Count: ${
+                    memberPlayStatus!.count.isEmpty ?
+                    0 : lastCount
+                }"),
+                buildNormalText(text: "Strength: ${
+                    memberPlayStatus!.strength.isEmpty ?
+                    0 : lastStrength
+                }"),
                 buildNormalText(text: "Speed: ${
                   memberPlayStatus!.speed.isEmpty ?
                     0 : lastSpeed
                 }"),
-                buildNormalText(text: "Strength: ${
-                  memberPlayStatus!.strength.isEmpty ?
-                    0 : lastStrength
-                }"),
-                buildNormalText(text: "Count: ${
-                  memberPlayStatus!.count.isEmpty ?
-                    0 : lastCount
-                }"),
                 Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
                 buildTitleText(text:"Member GEMS Control"),
                 buildDropdownButton(
-                    label: "Workout Speed",
-                    initialValue: memberWorkoutSpeed.toString(),
+                    label: "Workout Count",
+                    range: 20,
+                    initialValue: memberWorkoutCount.toString(),
                     callback: (value) {
                       setState(() {
                         _logger.d(value);
-                        memberWorkoutSpeed = int.parse(value!);
+                        memberWorkoutCount = int.parse(value!);
                       });
                     }),
                 buildDropdownButton(
@@ -122,13 +128,12 @@ class _MemberPlayStatusViewState extends State<MemberPlayStatusView>
                       });
                     }),
                 buildDropdownButton(
-                    label: "Workout Count",
-                    range: 20,
-                    initialValue: memberWorkoutCount.toString(),
+                    label: "Workout Speed",
+                    initialValue: memberWorkoutSpeed.toString(),
                     callback: (value) {
                       setState(() {
                         _logger.d(value);
-                        memberWorkoutCount = int.parse(value!);
+                        memberWorkoutSpeed = int.parse(value!);
                       });
                     }),
                 Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),

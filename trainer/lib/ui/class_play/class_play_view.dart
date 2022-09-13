@@ -76,31 +76,31 @@ class _ClassPlayViewState extends State<ClassPlayView>
                 Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
                 buildTitleText(text:"Class GEMS Control"),
                 buildDropdownButton(
+                    label: "Exercise Count",
+                    range: 20,
+                    initialValue: classWorkoutCount.toString(),
+                    callback: (value) {
+                      setState(() {
+                        logger.d(value);
+                        classWorkoutCount = int.parse(value!);
+                      });
+                    }),
+                buildDropdownButton(
+                    label: "Exercise Strength",
+                    initialValue: classWorkoutStrength.toString(),
+                    callback: (value) {
+                      setState(() {
+                        logger.d(value);
+                        classWorkoutStrength = int.parse(value!);
+                      });
+                    }),
+                buildDropdownButton(
                   label: "Exercise Speed",
                   initialValue: classWorkoutSpeed.toString(),
                   callback: (value) {
                     setState(() {
                       logger.d(value);
                       classWorkoutSpeed = int.parse(value!);
-                    });
-                }),
-                buildDropdownButton(
-                  label: "Exercise Strength",
-                  initialValue: classWorkoutStrength.toString(),
-                  callback: (value) {
-                    setState(() {
-                      logger.d(value);
-                      classWorkoutStrength = int.parse(value!);
-                    });
-                }),
-                buildDropdownButton(
-                  label: "Exercise Count",
-                  range: 20,
-                  initialValue: classWorkoutCount.toString(),
-                  callback: (value) {
-                    setState(() {
-                      logger.d(value);
-                      classWorkoutCount = int.parse(value!);
                     });
                 }),
                 SizedBox(
