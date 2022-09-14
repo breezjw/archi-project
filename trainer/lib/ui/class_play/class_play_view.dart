@@ -32,7 +32,7 @@ class _ClassPlayViewState extends State<ClassPlayView>
 
   int classWorkoutSpeed = 5;
   int classWorkoutStrength = 5;
-  int classWorkoutCount = 10;
+  int classWorkoutCount = 100;
 
   @override
   void initState() {
@@ -78,6 +78,7 @@ class _ClassPlayViewState extends State<ClassPlayView>
                 buildDropdownButton(
                     label: "Exercise Count",
                     range: 20,
+                    interval: 10,
                     initialValue: classWorkoutCount.toString(),
                     callback: (value) {
                       setState(() {
@@ -111,8 +112,8 @@ class _ClassPlayViewState extends State<ClassPlayView>
                       memberPlayStatusController.listMemberPlayStatus.forEach((element) {
                         var memberPlayStatus = element;
                         memberPlayStatus.controlSpeed = classWorkoutSpeed;
-                        memberPlayStatus.controlCount = classWorkoutStrength;
-                        memberPlayStatus.controlStrength = classWorkoutCount;
+                        memberPlayStatus.controlCount = classWorkoutCount;
+                        memberPlayStatus.controlStrength = classWorkoutStrength;
 
                         logger.d(memberPlayStatus.toJson());
 

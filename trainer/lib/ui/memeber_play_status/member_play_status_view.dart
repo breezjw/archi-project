@@ -27,9 +27,9 @@ class _MemberPlayStatusViewState extends State<MemberPlayStatusView>
   final AuthController _authController = AuthController.to;
   MemberClassExerciseController memberPlayStatusController = Get.find<MemberClassExerciseController>();
 
-  int memberWorkoutSpeed = 0;
-  int memberWorkoutStrength = 0;
-  int memberWorkoutCount = 0;
+  int memberWorkoutSpeed = 5;
+  int memberWorkoutStrength = 5;
+  int memberWorkoutCount = 100;
 
   @override
   void initState() {
@@ -71,6 +71,8 @@ class _MemberPlayStatusViewState extends State<MemberPlayStatusView>
         var lastSpeed = memberPlayStatus.speed[(memberPlayStatus.speed.length-1)];
         var lastStrength = memberPlayStatus.strength[(memberPlayStatus.strength.length-1)];
 
+        _logger.d(memberWorkoutCount);
+
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: memberPlayStatusController.memberPlayStatus == null
@@ -111,6 +113,7 @@ class _MemberPlayStatusViewState extends State<MemberPlayStatusView>
                 buildDropdownButton(
                     label: "Workout Count",
                     range: 20,
+                    interval: 10,
                     initialValue: memberWorkoutCount.toString(),
                     callback: (value) {
                       setState(() {
