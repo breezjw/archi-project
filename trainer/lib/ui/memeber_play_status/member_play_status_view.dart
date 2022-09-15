@@ -33,13 +33,23 @@ class _MemberPlayStatusViewState extends State<MemberPlayStatusView>
 
   @override
   void initState() {
-    memberPlayStatusController.getMemberClassExercise(widget.docId).then((value) {
-      setState(() {
-        memberWorkoutSpeed = memberPlayStatusController.memberPlayStatus!.controlSpeed;
-        memberWorkoutStrength = memberPlayStatusController.memberPlayStatus!.controlStrength;
-        memberWorkoutCount = memberPlayStatusController.memberPlayStatus!.controlCount;
-      });
+    // memberPlayStatusController.getMemberClassExercise(widget.docId).then((value) {
+    //   setState(() {
+    //     memberWorkoutSpeed = memberPlayStatusController.memberPlayStatus!.controlSpeed;
+    //     memberWorkoutStrength = memberPlayStatusController.memberPlayStatus!.controlStrength;
+    //     memberWorkoutCount = memberPlayStatusController.memberPlayStatus!.controlCount;
+    //   });
+    // });
+
+    var member = memberPlayStatusController.listMemberPlayStatus.firstWhere((
+        element) => element.memberClassExerciseId == widget.docId);
+
+    setState(() {
+      memberWorkoutSpeed = member!.controlSpeed;
+      memberWorkoutStrength = member!.controlStrength;
+      memberWorkoutCount = member!.controlCount;
     });
+
     super.initState();
   }
 
@@ -66,30 +76,36 @@ class _MemberPlayStatusViewState extends State<MemberPlayStatusView>
         ),
       ),
       body: Obx(() {
-        var memberPlayStatus = memberPlayStatusController.memberPlayStatus;
-        var lastCount = memberPlayStatus!.count[(memberPlayStatus!.count.length-1)];
-        var lastSpeed = memberPlayStatus.speed[(memberPlayStatus.speed.length-1)];
-        var lastStrength = memberPlayStatus.strength[(memberPlayStatus.strength.length-1)];
+        // var memberPlayStatus = memberPlayStatusController.memberPlayStatus;
+        // var lastCount = memberPlayStatus!.count[(memberPlayStatus!.count.length-1)];
+        // var lastSpeed = memberPlayStatus.speed[(memberPlayStatus.speed.length-1)];
+        // var lastStrength = memberPlayStatus.strength[(memberPlayStatus.strength.length-1)];
+
+        var member = memberPlayStatusController.listMemberPlayStatus.firstWhere((
+            element) => element.memberClassExerciseId == widget.docId);
+
+        var lastCount = member!.count[(member!.count.length-1)];
+        var lastSpeed = member.speed[(member.speed.length-1)];
+        var lastStrength = member.strength[(member.strength.length-1)];
 
         _logger.d(memberWorkoutCount);
 
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          child: memberPlayStatusController.memberPlayStatus == null
-            ? const Center(child: CircularProgressIndicator())
-            :Column(
+          child:
+            Column(
               children: [
                 buildTitleText(text:"Member Info"),
-                buildNormalText(text: "Name: ${memberPlayStatus!.name}"),
+                buildNormalText(text: "Name: ${member!.name}"),
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
                   child: Text(
-                    "Exercise Status: ${memberPlayStatus!.exerciseStatus.toUpperCase()}",
+                    "Exercise Status: ${member!.exerciseStatus.toUpperCase()}",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 17,
-                      color: workoutStatusColor[memberPlayStatus!.exerciseStatus],
+                      color: workoutStatusColor[member!.exerciseStatus],
                     ),
                     textAlign: TextAlign.left,
                   ),
@@ -97,15 +113,15 @@ class _MemberPlayStatusViewState extends State<MemberPlayStatusView>
                 Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
                 buildTitleText(text:"Member GEMS Info"),
                 buildNormalText(text: "Count: ${
-                    memberPlayStatus!.count.isEmpty ?
+                    member!.count.isEmpty ?
                     0 : lastCount
                 }"),
                 buildNormalText(text: "Strength: ${
-                    memberPlayStatus!.strength.isEmpty ?
+                    member!.strength.isEmpty ?
                     0 : lastStrength
                 }"),
                 buildNormalText(text: "Speed: ${
-                  memberPlayStatus!.speed.isEmpty ?
+                    member!.speed.isEmpty ?
                     0 : lastSpeed
                 }"),
                 Container(padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),),
@@ -145,12 +161,12 @@ class _MemberPlayStatusViewState extends State<MemberPlayStatusView>
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      var memberPlayStatus = memberPlayStatusController.memberPlayStatus;
-                      memberPlayStatus!.controlSpeed = memberWorkoutSpeed;
-                      memberPlayStatus.controlCount = memberWorkoutCount;
-                      memberPlayStatus.controlStrength = memberWorkoutStrength;
+                      // var memberPlayStatus = memberPlayStatusController.memberPlayStatus;
+                      member!.controlSpeed = memberWorkoutSpeed;
+                      member.controlCount = memberWorkoutCount;
+                      member.controlStrength = memberWorkoutStrength;
 
-                      memberPlayStatusController.updateMemberClassExercise(memberPlayStatus);
+                      memberPlayStatusController.updateMemberClassExercise(member);
                     },
                     style: ElevatedButton.styleFrom(
                       primary: Colors.white,//change background color of button

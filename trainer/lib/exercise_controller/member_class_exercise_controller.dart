@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:trainer/model/member_exercise.dart';
@@ -35,6 +36,7 @@ class MemberClassExerciseController extends GetxController {
     // testGroups.value = await testGroupService.listTestGroup("aaa");
     // _isLoadingTestGroup.value = false;
     // testGroups.bindStream(testGroupService.loadTestGroup("aaa"));
+
     _memberPlayStatus.bindStream(memberPlayStatusService.getMemberClassExerciseStream(docId));
   }
 
